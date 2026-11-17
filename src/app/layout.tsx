@@ -26,8 +26,8 @@ const shade = Bungee_Shade({ weight: "400", subsets: ["latin"], variable: "--fon
 const metal = Metal_Mania({ weight: "400", subsets: ["latin"], variable: "--font-metal" });
 
 export const metadata: Metadata = {
-  title: { default: "MRS — loud, home-brewed, slightly sticky", template: "%s | MRS" },
-  description: "MRS is a rock / grunge / punk band from Paris that brews beer and makes AI slop.",
+  title: { default: "MRS — rock, grunge and punk from Paris", template: "%s | MRS" },
+  description: "MRS is a rock / grunge / punk band from Paris.",
   icons: { icon: "/mrs-logo.jpg" },
 };
 

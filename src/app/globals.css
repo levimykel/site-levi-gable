@@ -386,8 +386,9 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
 
 .beers {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: 4rem 2.5rem;
+  margin-top: 3rem;
 }
 
 .beer {
@@ -407,10 +408,31 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
   box-shadow: 0 0 40px 10px var(--glow);
 }
 
+.beer-label-frame {
+  margin: -2.5rem -0.5rem 0;
+  padding: 0.75rem;
+  background: var(--ink);
+  border: 4px solid var(--glow);
+  rotate: calc(var(--rot) * -2);
+  box-shadow: 8px 8px 0 var(--glow);
+}
+
 .beer-label {
+  display: block;
   width: 100%;
   aspect-ratio: 3 / 4;
   object-fit: cover;
+}
+
+.beer-label-missing {
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  font-family: var(--font-wet);
+  font-size: 2rem;
+  text-align: center;
+  color: var(--glow);
+  background: repeating-linear-gradient(-45deg, #222 0 14px, #2c2c2c 14px 28px);
 }
 
 .beer h3 {
@@ -1066,7 +1088,6 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
   z-index: 98;
   top: -3rem;
   pointer-events: none;
-  animation: beer-fall 3s linear forwards;
 }
 
 .feedback-flash {
@@ -1261,12 +1282,6 @@ html.moshing {
   to {
     opacity: 0;
     transform: translateY(-60px) scale(1.6);
-  }
-}
-
-@keyframes beer-fall {
-  to {
-    transform: translateY(110vh) rotate(720deg);
   }
 }
 

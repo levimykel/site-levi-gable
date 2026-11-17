@@ -20,7 +20,7 @@ const KONAMI = [
 const IDLE_MS = 30_000;
 
 const DEFAULT_AWAY_TITLES = [
-  "come back, the beer is getting warm 🍺",
+  "come back, the amp is getting cold",
   "MRS misses you 🥺",
   "you left the amp on",
   "Vincent is still counting you in",
@@ -187,17 +187,24 @@ function flash() {
   window.setTimeout(() => el.remove(), 1400);
 }
 
-function beerRain() {
+export function beerRain() {
   playBurp();
   for (let i = 0; i < 60; i++) {
     const drop = document.createElement("span");
     drop.className = "beer-drop";
     drop.textContent = Math.random() > 0.1 ? "🍺" : "🍻";
     drop.style.left = `${Math.random() * 100}vw`;
-    drop.style.animationDelay = `${Math.random() * 1.5}s`;
     drop.style.fontSize = `${1 + Math.random() * 2.5}rem`;
     document.body.appendChild(drop);
-    window.setTimeout(() => drop.remove(), 4500);
+    const spin = (Math.random() - 0.5) * 1440;
+    drop
+      .animate([{ transform: "translateY(0)" }, { transform: `translateY(110vh) rotate(${spin}deg)` }], {
+        duration: 2200 + Math.random() * 1600,
+        delay: Math.random() * 1500,
+        easing: "cubic-bezier(.4,0,1,1)",
+        fill: "both",
+      })
+      .finished.then(() => drop.remove(), () => drop.remove());
   }
 }
 

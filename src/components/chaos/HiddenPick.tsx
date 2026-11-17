@@ -48,8 +48,22 @@ export function HiddenPick() {
         setFound(true);
         playPowerChord(1.2);
         toast(PICK_LINES[Math.floor(Math.random() * PICK_LINES.length)]);
+        const returned = returnPick();
+        if (returned > 1) toast(`🎸 Picks returned to Nick: ${returned}. He has already lost ${returned + 1} more.`);
         findEgg("pick");
       }}
     />
   );
+}
+
+const PICKS_KEY = "mrs:picks";
+
+function returnPick() {
+  try {
+    const returned = (Number(localStorage.getItem(PICKS_KEY)) || 0) + 1;
+    localStorage.setItem(PICKS_KEY, String(returned));
+    return returned;
+  } catch {
+    return 1;
+  }
 }

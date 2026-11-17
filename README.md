@@ -2,7 +2,7 @@
 
 # MRS
 
-The official website of MRS: rock, grunge, punk, home-brewed beer and AI slop, from Paris.
+The official website of MRS: rock, grunge and punk from Paris.
 
 Built with [Next.js](https://nextjs.org) and [Prismic](https://prismic.io) for the Prismic Oscars. Aiming squarely at **Best Beautiful Disaster**.
 

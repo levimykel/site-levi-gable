@@ -12,7 +12,7 @@ export function Footer({ settings }: { settings: SettingsDocument | null }) {
       {settings && isFilled.richText(settings.data.footer_text) ? (
         <PrismicRichText field={settings.data.footer_text} />
       ) : (
-        <p>© MRS. All rights reversed. No AIs were harmed (several were bullied).</p>
+        <p>© MRS. All rights reversed.</p>
       )}
       {settings && isFilled.link(settings.data.instagram) ? (
         <PrismicNextLink field={settings.data.instagram} className="insta">
@@ -21,8 +21,8 @@ export function Footer({ settings }: { settings: SettingsDocument | null }) {
       ) : null}
       <VisitorCounter />
       <EggCounter />
-      <p className="netscape">Best viewed in Netscape Navigator 4.0 at 640×480 with a home-brew in hand.</p>
-      <p className="hint">psst… try typing &ldquo;beer&rdquo;. Or don&rsquo;t. We&rsquo;re a website, not a cop.</p>
+      <p className="netscape">Best viewed in Netscape Navigator 4.0 at 640×480 with the volume at 11.</p>
+      <p className="hint">psst… try typing the drummer&rsquo;s name. Or don&rsquo;t. We&rsquo;re a website, not a cop.</p>
     </footer>
   );
 }

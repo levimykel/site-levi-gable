@@ -2,6 +2,7 @@ import { isFilled, type Content } from "@prismicio/client";
 import { PrismicNextImage } from "@prismicio/next";
 import { PrismicRichText, type SliceComponentProps } from "@prismicio/react";
 import { wobble } from "@/lib/wobble";
+import { PourButton } from "./PourButton";
 
 export type BeerCellarProps = SliceComponentProps<Content.BeerCellarSlice>;
 
@@ -24,7 +25,13 @@ export default function BeerCellar({ slice }: BeerCellarProps) {
               className="beer"
               style={{ "--glow": glow ?? "#f5c518", "--rot": `${wobble(i + 21, 6)}deg` }}
             >
-              <PrismicNextImage field={label} className="beer-label shaky-img" fallbackAlt="" />
+              <div className="beer-label-frame">
+                {isFilled.image(label) ? (
+                  <PrismicNextImage field={label} className="beer-label shaky-img" data-shake="earthquake" fallbackAlt="" />
+                ) : (
+                  <div className="beer-label beer-label-missing">label coming soon</div>
+                )}
+              </div>
               <h3>{name}</h3>
               <p className="beer-meta">
                 {style}
@@ -39,6 +46,7 @@ export default function BeerCellar({ slice }: BeerCellarProps) {
                   <PrismicRichText field={side_effects} />
                 </div>
               ) : null}
+              <PourButton name={name ?? ""} />
             </article>
           );
         })}
