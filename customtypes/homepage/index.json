@@ -1,0 +1,76 @@
+{
+  "format": "page",
+  "id": "homepage",
+  "json": {
+    "Main": {
+      "slices": {
+        "config": {
+          "choices": {
+            "chaos_hero": {
+              "type": "SharedSlice"
+            },
+            "band_members": {
+              "type": "SharedSlice"
+            },
+            "beer_cellar": {
+              "type": "SharedSlice"
+            },
+            "gig_list": {
+              "type": "SharedSlice"
+            },
+            "yeaaap_button": {
+              "type": "SharedSlice"
+            },
+            "the_bar": {
+              "type": "SharedSlice"
+            },
+            "video": {
+              "type": "SharedSlice"
+            },
+            "manifesto": {
+              "type": "SharedSlice"
+            },
+            "slop_gallery": {
+              "type": "SharedSlice"
+            },
+            "music": {
+              "type": "SharedSlice"
+            }
+          }
+        },
+        "fieldset": "Slice Zone",
+        "type": "Slices"
+      }
+    },
+    "SEO & Metadata": {
+      "meta_title": {
+        "config": {
+          "label": "Meta Title",
+          "placeholder": "A title of the page used for social media and search engines"
+        },
+        "type": "Text"
+      },
+      "meta_description": {
+        "config": {
+          "label": "Meta Description",
+          "placeholder": "A brief summary of the page"
+        },
+        "type": "Text"
+      },
+      "meta_image": {
+        "config": {
+          "constraint": {
+            "height": 1260,
+            "width": 2400
+          },
+          "label": "Meta Image",
+          "thumbnails": []
+        },
+        "type": "Image"
+      }
+    }
+  },
+  "label": "Homepage",
+  "repeatable": false,
+  "status": true
+}

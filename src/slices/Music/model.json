@@ -1,0 +1,57 @@
+{
+  "id": "music",
+  "name": "Music",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Default",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "name": "Default",
+      "primary": {
+        "heading": {
+          "config": {
+            "label": "Heading",
+            "single": "heading2"
+          },
+          "type": "StructuredText"
+        },
+        "tracks": {
+          "config": {
+            "fields": {
+              "title": {
+                "config": {
+                  "label": "Title"
+                },
+                "type": "Text"
+              },
+              "audio": {
+                "config": {
+                  "label": "Audio file",
+                  "select": "media"
+                },
+                "type": "Link"
+              },
+              "embed": {
+                "config": {
+                  "label": "Embed (Spotify, SoundCloud, Bandcamp…)"
+                },
+                "type": "Embed"
+              },
+              "description": {
+                "config": {
+                  "label": "Description"
+                },
+                "type": "Text"
+              }
+            },
+            "label": "Tracks"
+          },
+          "type": "Group"
+        }
+      },
+      "version": ""
+    }
+  ]
+}

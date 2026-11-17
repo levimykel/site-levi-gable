@@ -1,0 +1,29 @@
+{
+  "id": "yeaaap_button",
+  "name": "Yeaaap Button",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Default",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "name": "Default",
+      "primary": {
+        "label": {
+          "config": {
+            "label": "Button label"
+          },
+          "type": "Text"
+        },
+        "counter_text": {
+          "config": {
+            "label": "Counter text (use {count})"
+          },
+          "type": "Text"
+        }
+      },
+      "version": ""
+    }
+  ]
+}

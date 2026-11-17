@@ -1,0 +1,60 @@
+{
+  "format": "custom",
+  "id": "band_member",
+  "json": {
+    "Main": {
+      "uid": {
+        "config": {
+          "label": "UID"
+        },
+        "type": "UID"
+      },
+      "name": {
+        "config": {
+          "label": "Name"
+        },
+        "type": "Text"
+      },
+      "instrument": {
+        "config": {
+          "label": "Instrument / crime"
+        },
+        "type": "Text"
+      },
+      "photo": {
+        "config": {
+          "label": "Photo"
+        },
+        "type": "Image"
+      },
+      "quote": {
+        "config": {
+          "label": "Unhinged quote",
+          "multi": "paragraph,em,strong"
+        },
+        "type": "StructuredText"
+      },
+      "weird_fact": {
+        "config": {
+          "label": "Weird fact"
+        },
+        "type": "Text"
+      },
+      "shake_level": {
+        "config": {
+          "default_value": "unhinged",
+          "label": "Shake level on hover",
+          "options": [
+            "mild",
+            "unhinged",
+            "earthquake"
+          ]
+        },
+        "type": "Select"
+      }
+    }
+  },
+  "label": "Band Member",
+  "repeatable": true,
+  "status": true
+}

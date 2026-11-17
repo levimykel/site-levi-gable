@@ -1,0 +1,36 @@
+{
+  "id": "manifesto",
+  "name": "Manifesto",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Default",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "name": "Default",
+      "primary": {
+        "body": {
+          "config": {
+            "label": "Body",
+            "multi": "heading2,heading3,paragraph,strong,em,hyperlink,list-item"
+          },
+          "type": "StructuredText"
+        },
+        "style": {
+          "config": {
+            "default_value": "ransom-note",
+            "label": "Style",
+            "options": [
+              "ransom-note",
+              "typewriter",
+              "screaming"
+            ]
+          },
+          "type": "Select"
+        }
+      },
+      "version": ""
+    }
+  ]
+}

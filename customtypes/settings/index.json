@@ -1,0 +1,74 @@
+{
+  "format": "custom",
+  "id": "settings",
+  "json": {
+    "Main": {
+      "site_title": {
+        "config": {
+          "label": "Site title"
+        },
+        "type": "Text"
+      },
+      "tagline": {
+        "config": {
+          "label": "Tagline"
+        },
+        "type": "Text"
+      },
+      "navigation": {
+        "config": {
+          "allowText": true,
+          "label": "Navigation",
+          "repeat": true
+        },
+        "type": "Link"
+      },
+      "marquee": {
+        "config": {
+          "fields": {
+            "text": {
+              "config": {
+                "label": "Text"
+              },
+              "type": "Text"
+            }
+          },
+          "label": "Scrolling nonsense (marquee)"
+        },
+        "type": "Group"
+      },
+      "away_titles": {
+        "config": {
+          "fields": {
+            "text": {
+              "config": {
+                "label": "Text"
+              },
+              "type": "Text"
+            }
+          },
+          "label": "Tab titles when the visitor leaves"
+        },
+        "type": "Group"
+      },
+      "instagram": {
+        "config": {
+          "allowTargetBlank": true,
+          "label": "Instagram",
+          "select": "web"
+        },
+        "type": "Link"
+      },
+      "footer_text": {
+        "config": {
+          "label": "Footer text",
+          "multi": "paragraph,strong,em,hyperlink"
+        },
+        "type": "StructuredText"
+      }
+    }
+  },
+  "label": "Settings",
+  "repeatable": false,
+  "status": true
+}

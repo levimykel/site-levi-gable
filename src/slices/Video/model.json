@@ -1,0 +1,36 @@
+{
+  "id": "video",
+  "name": "Video",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Default",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "name": "Default",
+      "primary": {
+        "heading": {
+          "config": {
+            "label": "Heading",
+            "single": "heading2"
+          },
+          "type": "StructuredText"
+        },
+        "video": {
+          "config": {
+            "label": "Video (YouTube, Vimeo, Instagram…)"
+          },
+          "type": "Embed"
+        },
+        "caption": {
+          "config": {
+            "label": "Caption"
+          },
+          "type": "Text"
+        }
+      },
+      "version": ""
+    }
+  ]
+}

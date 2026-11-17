@@ -1,0 +1,67 @@
+{
+  "format": "custom",
+  "id": "gig",
+  "json": {
+    "Main": {
+      "uid": {
+        "config": {
+          "label": "UID"
+        },
+        "type": "UID"
+      },
+      "venue": {
+        "config": {
+          "label": "Venue"
+        },
+        "type": "Text"
+      },
+      "city": {
+        "config": {
+          "label": "City"
+        },
+        "type": "Text"
+      },
+      "date": {
+        "config": {
+          "label": "Date and time"
+        },
+        "type": "Timestamp"
+      },
+      "poster": {
+        "config": {
+          "label": "Poster"
+        },
+        "type": "Image"
+      },
+      "tickets": {
+        "config": {
+          "allowTargetBlank": true,
+          "label": "Tickets / info",
+          "select": "web"
+        },
+        "type": "Link"
+      },
+      "status": {
+        "config": {
+          "default_value": "upcoming",
+          "label": "Status",
+          "options": [
+            "upcoming",
+            "played",
+            "cancelled (hangover)"
+          ]
+        },
+        "type": "Select"
+      },
+      "notes": {
+        "config": {
+          "label": "Notes"
+        },
+        "type": "Text"
+      }
+    }
+  },
+  "label": "Gig",
+  "repeatable": true,
+  "status": true
+}

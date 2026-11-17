@@ -1,0 +1,31 @@
+{
+  "id": "gig_list",
+  "name": "Gig List",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Default",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "name": "Default",
+      "primary": {
+        "heading": {
+          "config": {
+            "label": "Heading",
+            "single": "heading2"
+          },
+          "type": "StructuredText"
+        },
+        "empty_message": {
+          "config": {
+            "label": "Message when there are no gigs",
+            "multi": "paragraph,em"
+          },
+          "type": "StructuredText"
+        }
+      },
+      "version": ""
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "format": "custom",
+  "id": "beer",
+  "json": {
+    "Main": {
+      "uid": {
+        "config": {
+          "label": "UID"
+        },
+        "type": "UID"
+      },
+      "name": {
+        "config": {
+          "label": "Name"
+        },
+        "type": "Text"
+      },
+      "style": {
+        "config": {
+          "label": "Style"
+        },
+        "type": "Text"
+      },
+      "abv": {
+        "config": {
+          "label": "ABV (%)",
+          "max": 99,
+          "min": 0,
+          "step": 0.1
+        },
+        "type": "Number"
+      },
+      "label": {
+        "config": {
+          "label": "Label (AI slop)"
+        },
+        "type": "Image"
+      },
+      "tasting_notes": {
+        "config": {
+          "label": "Tasting notes",
+          "multi": "paragraph,em,strong"
+        },
+        "type": "StructuredText"
+      },
+      "side_effects": {
+        "config": {
+          "label": "Side effects",
+          "multi": "list-item,em,strong"
+        },
+        "type": "StructuredText"
+      },
+      "glow": {
+        "config": {
+          "label": "Glow colour"
+        },
+        "type": "Color"
+      }
+    }
+  },
+  "label": "Beer",
+  "repeatable": true,
+  "status": true
+}

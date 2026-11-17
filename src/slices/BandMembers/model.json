@@ -1,0 +1,52 @@
+{
+  "id": "band_members",
+  "name": "Band Members",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Default",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "name": "Default",
+      "primary": {
+        "heading": {
+          "config": {
+            "label": "Heading",
+            "single": "heading2"
+          },
+          "type": "StructuredText"
+        },
+        "members": {
+          "config": {
+            "fields": {
+              "member": {
+                "config": {
+                  "customtypes": [
+                    {
+                      "fields": [
+                        "name",
+                        "instrument",
+                        "photo",
+                        "quote",
+                        "weird_fact",
+                        "shake_level"
+                      ],
+                      "id": "band_member"
+                    }
+                  ],
+                  "label": "Member",
+                  "select": "document"
+                },
+                "type": "Link"
+              }
+            },
+            "label": "Members"
+          },
+          "type": "Group"
+        }
+      },
+      "version": ""
+    }
+  ]
+}

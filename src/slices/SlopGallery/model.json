@@ -1,0 +1,52 @@
+{
+  "id": "slop_gallery",
+  "name": "Slop Gallery",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Default",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "name": "Default",
+      "primary": {
+        "heading": {
+          "config": {
+            "label": "Heading",
+            "single": "heading2"
+          },
+          "type": "StructuredText"
+        },
+        "items": {
+          "config": {
+            "fields": {
+              "image": {
+                "config": {
+                  "label": "Image"
+                },
+                "type": "Image"
+              },
+              "caption": {
+                "config": {
+                  "label": "Caption (confidently wrong)"
+                },
+                "type": "Text"
+              },
+              "confidence": {
+                "config": {
+                  "label": "AI confidence (%)",
+                  "max": 1000,
+                  "min": 0
+                },
+                "type": "Number"
+              }
+            },
+            "label": "Items"
+          },
+          "type": "Group"
+        }
+      },
+      "version": ""
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "id": "chaos_hero",
+  "name": "Chaos Hero",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Default",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "name": "Default",
+      "primary": {
+        "title": {
+          "config": {
+            "label": "Title",
+            "single": "heading1"
+          },
+          "type": "StructuredText"
+        },
+        "subtitle": {
+          "config": {
+            "label": "Subtitle"
+          },
+          "type": "Text"
+        },
+        "image": {
+          "config": {
+            "label": "Image"
+          },
+          "type": "Image"
+        },
+        "chaos_level": {
+          "config": {
+            "default_value": "11",
+            "label": "Chaos level",
+            "options": [
+              "1",
+              "5",
+              "11"
+            ]
+          },
+          "type": "Select"
+        }
+      },
+      "version": ""
+    }
+  ]
+}

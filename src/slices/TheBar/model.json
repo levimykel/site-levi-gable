@@ -1,0 +1,63 @@
+{
+  "id": "the_bar",
+  "name": "The Bar",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Default",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "name": "Default",
+      "primary": {
+        "heading": {
+          "config": {
+            "label": "Heading",
+            "single": "heading2"
+          },
+          "type": "StructuredText"
+        },
+        "bar_name": {
+          "config": {
+            "label": "Bar name"
+          },
+          "type": "Text"
+        },
+        "description": {
+          "config": {
+            "label": "Description",
+            "multi": "paragraph,em,strong,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "address": {
+          "config": {
+            "label": "Address"
+          },
+          "type": "Text"
+        },
+        "location": {
+          "config": {
+            "label": "Location"
+          },
+          "type": "GeoPoint"
+        },
+        "photo": {
+          "config": {
+            "label": "Photo"
+          },
+          "type": "Image"
+        },
+        "map_link": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Map link",
+            "select": "web"
+          },
+          "type": "Link"
+        }
+      },
+      "version": ""
+    }
+  ]
+}

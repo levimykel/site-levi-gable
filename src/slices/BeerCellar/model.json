@@ -1,0 +1,60 @@
+{
+  "id": "beer_cellar",
+  "name": "Beer Cellar",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Default",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "name": "Default",
+      "primary": {
+        "heading": {
+          "config": {
+            "label": "Heading",
+            "single": "heading2"
+          },
+          "type": "StructuredText"
+        },
+        "intro": {
+          "config": {
+            "label": "Intro",
+            "multi": "paragraph,em,strong"
+          },
+          "type": "StructuredText"
+        },
+        "beers": {
+          "config": {
+            "fields": {
+              "beer": {
+                "config": {
+                  "customtypes": [
+                    {
+                      "fields": [
+                        "name",
+                        "style",
+                        "abv",
+                        "label",
+                        "tasting_notes",
+                        "side_effects",
+                        "glow"
+                      ],
+                      "id": "beer"
+                    }
+                  ],
+                  "label": "Beer",
+                  "select": "document"
+                },
+                "type": "Link"
+              }
+            },
+            "label": "Beers"
+          },
+          "type": "Group"
+        }
+      },
+      "version": ""
+    }
+  ]
+}

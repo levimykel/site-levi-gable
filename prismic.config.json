@@ -1,0 +1,13 @@
+{
+  "repositoryName": "ccad1afd",
+  "routes": [
+    {
+      "type": "homepage",
+      "path": "/"
+    },
+    {
+      "type": "page",
+      "path": "/:uid"
+    }
+  ]
+}
