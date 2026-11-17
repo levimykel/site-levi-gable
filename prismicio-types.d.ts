@@ -223,6 +223,66 @@ interface BeerDocumentData {
 export type BeerDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<BeerDocumentData>, "beer", Lang>;
 
 /**
+ * Item in *Gig → Photos*
+ */
+export interface GigDocumentDataPhotosItem {
+	/**
+	 * Photo field in *Gig → Photos*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: gig.photos[].image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+	
+	/**
+	 * Caption field in *Gig → Photos*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: gig.photos[].caption
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	caption: prismic.KeyTextField;
+}
+
+/**
+ * Item in *Gig → Video clips*
+ */
+export interface GigDocumentDataClipsItem {
+	/**
+	 * Title field in *Gig → Video clips*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: gig.clips[].title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Video file field in *Gig → Video clips*
+	 *
+	 * - **Field Type**: Link to Media
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: gig.clips[].file
+	 * - **Documentation**: https://prismic.io/docs/fields/link-to-media
+	 */
+	file: prismic.LinkToMediaField<prismic.FieldState, never>;
+	
+	/**
+	 * Or embed (YouTube, Instagram…) field in *Gig → Video clips*
+	 *
+	 * - **Field Type**: Embed
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: gig.clips[].embed
+	 * - **Documentation**: https://prismic.io/docs/fields/embed
+	 */
+	embed: prismic.EmbedField
+}
+
+/**
  * Content for Gig documents
  */
 interface GigDocumentData {
@@ -303,6 +363,50 @@ interface GigDocumentData {
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	notes: prismic.KeyTextField;
+	
+	/**
+	 * Set list field in *Gig*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: gig.setlist
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	setlist: prismic.RichTextField;
+	
+	/**
+	 * Highlight of the night field in *Gig*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: gig.highlight
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	highlight: prismic.KeyTextField;
+	
+	/**
+	 * Photos field in *Gig*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: gig.photos[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	photos: prismic.GroupField<Simplify<GigDocumentDataPhotosItem>>;
+	
+	/**
+	 * Video clips field in *Gig*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: gig.clips[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	clips: prismic.GroupField<Simplify<GigDocumentDataClipsItem>>;
 }
 
 /**
@@ -1398,6 +1502,8 @@ declare module "@prismicio/client" {
 			BeerDocumentData,
 			GigDocument,
 			GigDocumentData,
+			GigDocumentDataPhotosItem,
+			GigDocumentDataClipsItem,
 			HomepageDocument,
 			HomepageDocumentData,
 			HomepageDocumentDataSlicesSlice,

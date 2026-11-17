@@ -58,6 +58,66 @@
           "label": "Notes"
         },
         "type": "Text"
+      },
+      "setlist": {
+        "config": {
+          "label": "Set list",
+          "multi": "em"
+        },
+        "type": "StructuredText"
+      },
+      "highlight": {
+        "config": {
+          "label": "Highlight of the night"
+        },
+        "type": "Text"
+      },
+      "photos": {
+        "config": {
+          "fields": {
+            "image": {
+              "config": {
+                "label": "Photo"
+              },
+              "type": "Image"
+            },
+            "caption": {
+              "config": {
+                "label": "Caption"
+              },
+              "type": "Text"
+            }
+          },
+          "label": "Photos"
+        },
+        "type": "Group"
+      },
+      "clips": {
+        "config": {
+          "fields": {
+            "title": {
+              "config": {
+                "label": "Title"
+              },
+              "type": "Text"
+            },
+            "file": {
+              "config": {
+                "label": "Video file",
+                "select": "media"
+              },
+              "type": "Link"
+            },
+            "embed": {
+              "config": {
+                "label": "Or embed (YouTube, Instagram…)"
+              },
+              "type": "Embed"
+            }
+          },
+          "label": "Video clips"
+        },
+        "type": "Group"
       }
     }
   },

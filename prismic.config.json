@@ -8,6 +8,10 @@
     {
       "type": "page",
       "path": "/:uid"
+    },
+    {
+      "type": "gig",
+      "path": "/shows/:uid"
     }
   ]
 }
