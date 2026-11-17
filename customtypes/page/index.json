@@ -44,6 +44,9 @@
             },
             "merch_table": {
               "type": "SharedSlice"
+            },
+            "photo_gallery": {
+              "type": "SharedSlice"
             }
           }
         },

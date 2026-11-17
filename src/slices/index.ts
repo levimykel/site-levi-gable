@@ -7,6 +7,7 @@ import GigList from "./GigList";
 import Manifesto from "./Manifesto";
 import MerchTable from "./MerchTable";
 import Music from "./Music";
+import PhotoGallery from "./PhotoGallery";
 import SlopGallery from "./SlopGallery";
 import TheBar from "./TheBar";
 import Video from "./Video";
@@ -20,6 +21,7 @@ export const components = {
 	manifesto: Manifesto,
 	merch_table: MerchTable,
 	music: Music,
+	photo_gallery: PhotoGallery,
 	slop_gallery: SlopGallery,
 	the_bar: TheBar,
 	video: Video,

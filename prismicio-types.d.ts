@@ -420,7 +420,7 @@ interface GigDocumentData {
  */
 export type GigDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<GigDocumentData>, "gig", Lang>;
 
-type HomepageDocumentDataSlicesSlice = ChaosHeroSlice | BandMembersSlice | BeerCellarSlice | GigListSlice | YeaaapButtonSlice | TheBarSlice | VideoSlice | ManifestoSlice | SlopGallerySlice | MusicSlice | MerchTableSlice
+type HomepageDocumentDataSlicesSlice = ChaosHeroSlice | BandMembersSlice | BeerCellarSlice | GigListSlice | YeaaapButtonSlice | TheBarSlice | VideoSlice | ManifestoSlice | SlopGallerySlice | MusicSlice | MerchTableSlice | PhotoGallerySlice
 
 /**
  * Content for Homepage documents
@@ -480,7 +480,7 @@ interface HomepageDocumentData {
  */
 export type HomepageDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<HomepageDocumentData>, "homepage", Lang>;
 
-type PageDocumentDataSlicesSlice = ChaosHeroSlice | BandMembersSlice | BeerCellarSlice | GigListSlice | YeaaapButtonSlice | TheBarSlice | VideoSlice | ManifestoSlice | SlopGallerySlice | MusicSlice | MerchTableSlice
+type PageDocumentDataSlicesSlice = ChaosHeroSlice | BandMembersSlice | BeerCellarSlice | GigListSlice | YeaaapButtonSlice | TheBarSlice | VideoSlice | ManifestoSlice | SlopGallerySlice | MusicSlice | MerchTableSlice | PhotoGallerySlice
 
 /**
  * Content for Page documents
@@ -1241,6 +1241,79 @@ type MusicSliceVariation = MusicSliceDefault
 export type MusicSlice = prismic.SharedSlice<"music", MusicSliceVariation>;
 
 /**
+ * Item in *Photo Gallery → Default → Primary → Photos*
+ */
+export interface PhotoGallerySliceDefaultPrimaryPhotosItem {
+	/**
+	 * Photo field in *Photo Gallery → Default → Primary → Photos*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: photo_gallery.default.primary.photos[].image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+	
+	/**
+	 * Caption field in *Photo Gallery → Default → Primary → Photos*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: photo_gallery.default.primary.photos[].caption
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	caption: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *Photo Gallery → Default → Primary*
+ */
+export interface PhotoGallerySliceDefaultPrimary {
+	/**
+	 * Heading field in *Photo Gallery → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: photo_gallery.default.primary.heading
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	heading: prismic.RichTextField;
+	
+	/**
+	 * Photos field in *Photo Gallery → Default → Primary*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: photo_gallery.default.primary.photos[]
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	photos: prismic.GroupField<Simplify<PhotoGallerySliceDefaultPrimaryPhotosItem>>;
+}
+
+/**
+ * Default variation for Photo Gallery Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type PhotoGallerySliceDefault = prismic.SharedSliceVariation<"default", Simplify<PhotoGallerySliceDefaultPrimary>, never>;
+
+/**
+ * Slice variation for *Photo Gallery*
+ */
+type PhotoGallerySliceVariation = PhotoGallerySliceDefault
+
+/**
+ * Photo Gallery Shared Slice
+ *
+ * - **API ID**: `photo_gallery`
+ * - **Description**: *None*
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type PhotoGallerySlice = prismic.SharedSlice<"photo_gallery", PhotoGallerySliceVariation>;
+
+/**
  * Item in *Slop Gallery → Default → Primary → Items*
  */
 export interface SlopGallerySliceDefaultPrimaryItemsItem {
@@ -1594,6 +1667,11 @@ declare module "@prismicio/client" {
 			MusicSliceDefaultPrimary,
 			MusicSliceVariation,
 			MusicSliceDefault,
+			PhotoGallerySlice,
+			PhotoGallerySliceDefaultPrimaryPhotosItem,
+			PhotoGallerySliceDefaultPrimary,
+			PhotoGallerySliceVariation,
+			PhotoGallerySliceDefault,
 			SlopGallerySlice,
 			SlopGallerySliceDefaultPrimaryItemsItem,
 			SlopGallerySliceDefaultPrimary,
