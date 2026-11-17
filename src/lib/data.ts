@@ -1,0 +1,34 @@
+import { cacheLife } from "next/cache";
+import { notFound } from "next/navigation";
+import { cacheTagPrismicPages } from "@prismicio/next";
+import { createClient } from "@/prismicio";
+
+export async function getSettings(ref?: string) {
+  "use cache";
+  cacheLife("max");
+  const client = createClient();
+  const settings = await client.getSingle("settings", { ref }).catch(() => null);
+  if (settings) cacheTagPrismicPages([settings]);
+  return settings;
+}
+
+export async function getHomepage(ref?: string) {
+  "use cache";
+  cacheLife("max");
+  const client = createClient();
+  const page = await client.getSingle("homepage", { ref }).catch(() => notFound());
+  cacheTagPrismicPages([page]);
+  return page;
+}
+
+export async function getGigs(ref?: string) {
+  "use cache";
+  cacheLife("max");
+  const client = createClient();
+  const gigs = await client.getAllByType("gig", {
+    ref,
+    orderings: [{ field: "my.gig.date", direction: "desc" }],
+  });
+  cacheTagPrismicPages(gigs);
+  return gigs;
+}

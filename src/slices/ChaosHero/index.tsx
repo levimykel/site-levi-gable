@@ -1,26 +1,43 @@
-import { FC } from "react";
-import { Content } from "@prismicio/client";
-import { SliceComponentProps } from "@prismicio/react";
+import type { Content } from "@prismicio/client";
+import { asText } from "@prismicio/client";
+import { PrismicNextImage } from "@prismicio/next";
+import type { SliceComponentProps } from "@prismicio/react";
+import { pick, wobble } from "@/lib/wobble";
 
-/**
- * Props for `ChaosHero`.
- */
 export type ChaosHeroProps = SliceComponentProps<Content.ChaosHeroSlice>;
 
-/**
- * Component for "Chaos Hero" Slices.
- */
-const ChaosHero: FC<ChaosHeroProps> = ({ slice }) => {
-	return (
-		<section
-			data-slice-type={slice.slice_type}
-			data-slice-variation={slice.variation}
-		>
-			Placeholder component for {slice.slice_type} (variation: {slice.variation}) slices.
-			<br />
-			<strong>You can edit this slice directly in your code editor.</strong>
-		</section>
-	)
-};
+const FONTS = ["var(--font-wet)", "var(--font-metal)", "var(--font-shade)", "var(--font-marker)", "var(--font-comic)"];
 
-export default ChaosHero
+export default function ChaosHero({ slice }: ChaosHeroProps) {
+  const title = asText(slice.primary.title) || "MRS";
+  const chaos = Number(slice.primary.chaos_level ?? "11");
+
+  return (
+    <section
+      data-slice-type={slice.slice_type}
+      data-slice-variation={slice.variation}
+      className="chaos-hero"
+      style={{ "--chaos": chaos / 11 }}
+    >
+      <h1 aria-label={title}>
+        {title.split("").map((letter, i) => (
+          <span
+            key={i}
+            aria-hidden="true"
+            style={{
+              fontFamily: pick(FONTS, i + 1),
+              transform: `rotate(${wobble(i + 3, 18 * (chaos / 11))}deg) translateY(${wobble(i + 7, 20 * (chaos / 11))}px)`,
+              animationDelay: `${wobble(i, 1)}s`,
+            }}
+          >
+            {letter === " " ? " " : letter}
+          </span>
+        ))}
+      </h1>
+      {slice.primary.subtitle ? <p className="chaos-hero-subtitle">{slice.primary.subtitle}</p> : null}
+      <PrismicNextImage field={slice.primary.image} className="shaky-img chaos-hero-img" fallbackAlt="" />
+      <div className="sticker sticker-a">PARENTAL ADVISORY: HOME BREW</div>
+      <div className="sticker sticker-b">100% ORGANIC SLOP</div>
+    </section>
+  );
+}

@@ -1,26 +1,22 @@
-import { FC } from "react";
-import { Content } from "@prismicio/client";
-import { SliceComponentProps } from "@prismicio/react";
+import { isFilled, type Content } from "@prismicio/client";
+import { PrismicRichText, type SliceComponentProps } from "@prismicio/react";
 
-/**
- * Props for `Video`.
- */
 export type VideoProps = SliceComponentProps<Content.VideoSlice>;
 
-/**
- * Component for "Video" Slices.
- */
-const Video: FC<VideoProps> = ({ slice }) => {
-	return (
-		<section
-			data-slice-type={slice.slice_type}
-			data-slice-variation={slice.variation}
-		>
-			Placeholder component for {slice.slice_type} (variation: {slice.variation}) slices.
-			<br />
-			<strong>You can edit this slice directly in your code editor.</strong>
-		</section>
-	)
-};
-
-export default Video
+export default function Video({ slice }: VideoProps) {
+  return (
+    <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} className="video-slice">
+      <div className="slice-heading">
+        <PrismicRichText field={slice.primary.heading} />
+      </div>
+      <div className="crt">
+        {isFilled.embed(slice.primary.video) && slice.primary.video.html ? (
+          <div className="embed" dangerouslySetInnerHTML={{ __html: slice.primary.video.html }} />
+        ) : (
+          <div className="no-signal">NO SIGNAL</div>
+        )}
+      </div>
+      {slice.primary.caption ? <p className="caption">{slice.primary.caption}</p> : null}
+    </section>
+  );
+}

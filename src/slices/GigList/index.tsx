@@ -1,26 +1,61 @@
-import { FC } from "react";
-import { Content } from "@prismicio/client";
-import { SliceComponentProps } from "@prismicio/react";
+import { asDate, isFilled, type Content } from "@prismicio/client";
+import { PrismicNextImage, PrismicNextLink, getPreviewRef } from "@prismicio/next";
+import { PrismicRichText, type SliceComponentProps } from "@prismicio/react";
+import { getGigs } from "@/lib/data";
 
-/**
- * Props for `GigList`.
- */
 export type GigListProps = SliceComponentProps<Content.GigListSlice>;
 
-/**
- * Component for "Gig List" Slices.
- */
-const GigList: FC<GigListProps> = ({ slice }) => {
-	return (
-		<section
-			data-slice-type={slice.slice_type}
-			data-slice-variation={slice.variation}
-		>
-			Placeholder component for {slice.slice_type} (variation: {slice.variation}) slices.
-			<br />
-			<strong>You can edit this slice directly in your code editor.</strong>
-		</section>
-	)
-};
+const dateFormat = new Intl.DateTimeFormat("en-GB", {
+  weekday: "short",
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+  timeZone: "Europe/Paris",
+});
 
-export default GigList
+export default async function GigList({ slice }: GigListProps) {
+  const gigs = await getGigs(await getPreviewRef());
+
+  return (
+    <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} className="gig-list">
+      <div className="slice-heading">
+        <PrismicRichText field={slice.primary.heading} fallback={<h2>Gigs</h2>} />
+      </div>
+      {gigs.length === 0 ? (
+        <div className="gig-empty">
+          <PrismicRichText
+            field={slice.primary.empty_message}
+            fallback={<p>No gigs right now. We&rsquo;re at the bar. Check back after practice.</p>}
+          />
+        </div>
+      ) : (
+        <ol className="gigs">
+          {gigs.map((gig) => {
+            const date = asDate(gig.data.date);
+            return (
+              <li key={gig.id} className={`gig gig-${(gig.data.status ?? "upcoming").split(" ")[0]}`}>
+                <PrismicNextImage field={gig.data.poster} className="gig-poster shaky-img" fallbackAlt="" />
+                <div>
+                  <p className="gig-date">{date ? dateFormat.format(date) : "Date: when we feel like it"}</p>
+                  <h3>
+                    {gig.data.venue}
+                    {gig.data.city ? <span className="gig-city"> — {gig.data.city}</span> : null}
+                  </h3>
+                  {gig.data.notes ? <p>{gig.data.notes}</p> : null}
+                  <p className="gig-status">{gig.data.status}</p>
+                  {isFilled.link(gig.data.tickets) ? (
+                    <PrismicNextLink field={gig.data.tickets} className="chaos-button">
+                      Tickets / info
+                    </PrismicNextLink>
+                  ) : null}
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+      )}
+    </section>
+  );
+}
