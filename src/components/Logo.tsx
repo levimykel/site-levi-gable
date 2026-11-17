@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 import { findEgg, toast } from "./chaos/eggs";
@@ -21,11 +22,7 @@ export function Logo({ title }: { title: string }) {
         if (pokes.current === 5) findEgg("logo");
       }}
     >
-      {title.split("").map((letter, i) => (
-        <span key={i} style={{ animationDelay: `${i * -0.37}s` }}>
-          {letter}
-        </span>
-      ))}
+      <Image src="/mrs-logo.jpg" alt={title} width={150} height={150} preload />
     </Link>
   );
 }

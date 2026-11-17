@@ -10,9 +10,8 @@
   --orange: #ff5a1f;
   --scroll-tilt: 0deg;
   --yeaaap-tilt: 0;
-  --pick: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M16 30C10 24 3 15 3 9 3 4 9 2 16 2s13 2 13 7c0 6-7 15-13 21z' fill='%23ff2e88' stroke='%23111' stroke-width='2'/%3E%3Ctext x='16' y='15' font-size='8' text-anchor='middle' font-family='Impact' fill='%23111'%3EMRS%3C/text%3E%3C/svg%3E")
-      4 4,
-    auto;
+  --pick-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M16 30C10 24 3 15 3 9 3 4 9 2 16 2s13 2 13 7c0 6-7 15-13 21z' fill='%23ff2e88' stroke='%23111' stroke-width='2'/%3E%3Ctext x='16' y='15' font-size='8' text-anchor='middle' font-family='Impact' fill='%23111'%3EMRS%3C/text%3E%3C/svg%3E");
+  --pick: var(--pick-image) 4 4, auto;
 }
 
 html {
@@ -68,24 +67,28 @@ button {
 }
 
 .logo {
-  font-family: var(--font-metal);
-  font-size: clamp(2rem, 6vw, 3.5rem);
-  line-height: 1;
-  color: var(--yellow);
-  text-decoration: none;
-  text-shadow:
-    3px 3px 0 var(--pink),
-    -2px -2px 0 var(--cyan);
+  display: block;
+  width: clamp(64px, 9vw, 96px);
+  transform-origin: 50% 0;
+  animation: logo-swing 3.2s ease-in-out infinite;
 }
 
-.logo span {
-  display: inline-block;
-  animation: jitter 0.35s steps(2) infinite;
+.logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 3px solid var(--yellow);
+  box-shadow:
+    4px 4px 0 var(--pink),
+    -3px -3px 0 var(--cyan);
 }
 
-.logo:hover span {
-  animation-duration: 0.08s;
-  color: var(--pink);
+.logo:hover {
+  animation: logo-swing 0.35s ease-in-out infinite;
+}
+
+.logo:hover img {
+  filter: invert(1) hue-rotate(180deg);
 }
 
 .tagline {
@@ -306,7 +309,7 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
   grid-template-columns: 1fr minmax(0, 260px);
 }
 
-.member-right img {
+.member-right > :not(.member-text) {
   order: 2;
 }
 
@@ -316,6 +319,24 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
   object-fit: cover;
   border: 6px solid currentColor;
   border-radius: 50% 40% 55% 45%;
+}
+
+.member-photo-missing {
+  display: grid;
+  place-content: center;
+  aspect-ratio: 1;
+  font-family: var(--font-wet);
+  font-size: 1.8rem;
+  text-align: center;
+  color: var(--paper);
+  background: repeating-linear-gradient(-45deg, var(--ink) 0 14px, #333 14px 28px);
+  border: 6px solid currentColor;
+  border-radius: 50% 40% 55% 45%;
+}
+
+.member-photo-missing small {
+  font-family: var(--font-comic);
+  font-size: 0.9rem;
 }
 
 .member h3 {
@@ -351,7 +372,7 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
     grid-template-columns: 1fr;
   }
 
-  .member-right img {
+  .member-right > :not(.member-text) {
     order: 0;
   }
 }
@@ -447,6 +468,17 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
   width: 120px;
   height: 160px;
   object-fit: cover;
+}
+
+.gig-poster-missing {
+  display: grid;
+  place-items: center;
+  padding: 0.5rem;
+  font-family: var(--font-marker);
+  text-align: center;
+  background: var(--yellow);
+  color: var(--ink);
+  rotate: -4deg;
 }
 
 .gig-date {
@@ -687,6 +719,96 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
   color: var(--pink);
 }
 
+/* ---------- Merch ---------- */
+
+.merch-intro {
+  font-family: var(--font-comic);
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.merch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 2.5rem 2rem;
+}
+
+.merch-item {
+  padding: 1rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 3px dashed var(--ink);
+  transform: rotate(var(--rot));
+}
+
+.merch-photo {
+  position: relative;
+}
+
+.merch-photo img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: var(--ink);
+}
+
+.price-tag {
+  position: absolute;
+  top: -0.8rem;
+  right: -0.8rem;
+  display: grid;
+  place-items: center;
+  width: 4.2rem;
+  height: 4.2rem;
+  font-family: var(--font-shade);
+  font-size: 1.1rem;
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  rotate: 14deg;
+}
+
+.merch-stamp {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  padding: 0.2rem 0.6rem;
+  font-family: var(--font-metal);
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #c8102e;
+  border: 4px solid #c8102e;
+  rotate: -18deg;
+  mix-blend-mode: multiply;
+  background: rgb(255 255 255 / 0.6);
+}
+
+.merch-item h3 {
+  margin-top: 0.75rem;
+  font-family: var(--font-marker);
+  font-size: 1.4rem;
+}
+
+.merch-sizes {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.merch-sold-out img {
+  filter: grayscale(1);
+}
+
+.cart-button:disabled {
+  background: #ccc;
+  text-decoration: line-through;
+}
+
+.merch-buy {
+  margin-top: 2.5rem;
+}
+
 /* ---------- Music ---------- */
 
 .tracks {
@@ -851,6 +973,36 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
   transform: rotate(4deg);
 }
 
+.mosh-button {
+  position: fixed;
+  z-index: 90;
+  left: 1rem;
+  bottom: 4rem;
+  padding: 0.5rem 0.9rem;
+  font-family: var(--font-metal);
+  font-size: 1.1rem;
+  color: var(--paper);
+  background: #c8102e;
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  box-shadow:
+    0 6px 0 #6b0718,
+    0 0 0 4px var(--yellow);
+  transform: rotate(-5deg);
+  animation: mosh-throb 1.2s ease-in-out infinite;
+}
+
+.mosh-button:hover {
+  animation: earthquake 0.1s infinite;
+}
+
+.mosh-button:active {
+  translate: 0 4px;
+  box-shadow:
+    0 2px 0 #6b0718,
+    0 0 0 4px var(--yellow);
+}
+
 .beer-policy {
   position: fixed;
   z-index: 95;
@@ -886,16 +1038,14 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
   font-size: 0.7rem;
 }
 
-.hidden-henry {
+.hidden-pick {
   position: absolute;
   z-index: 30;
-  border-radius: 50%;
-  background: url("/legacy/henry.jpg") center / cover;
-  border: 2px solid var(--ink);
-  opacity: 0.85;
+  background: var(--pick-image) center / contain no-repeat;
+  opacity: 0.8;
 }
 
-.hidden-henry:hover {
+.hidden-pick:hover {
   animation: earthquake 0.1s infinite;
   opacity: 1;
 }
@@ -917,20 +1067,6 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
   top: -3rem;
   pointer-events: none;
   animation: beer-fall 3s linear forwards;
-}
-
-.henry-run {
-  position: fixed;
-  z-index: 98;
-  bottom: 1rem;
-  left: -200px;
-  width: 160px;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 5px solid var(--ink);
-  pointer-events: none;
-  animation: henry-run 4s linear forwards;
 }
 
 .feedback-flash {
@@ -1134,23 +1270,23 @@ html.moshing {
   }
 }
 
-@keyframes henry-run {
-  0% {
-    left: -200px;
-    transform: translateY(0) rotate(0);
-  }
-  25% {
-    transform: translateY(-80px) rotate(90deg);
+@keyframes mosh-throb {
+  0%,
+  100% {
+    scale: 1;
   }
   50% {
-    transform: translateY(0) rotate(180deg);
+    scale: 1.08;
   }
-  75% {
-    transform: translateY(-80px) rotate(270deg);
-  }
+}
+
+@keyframes logo-swing {
+  0%,
   100% {
-    left: 110vw;
-    transform: translateY(0) rotate(360deg);
+    rotate: -6deg;
+  }
+  50% {
+    rotate: 6deg;
   }
 }
 

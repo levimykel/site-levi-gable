@@ -36,7 +36,11 @@ export default async function GigList({ slice }: GigListProps) {
             const date = asDate(gig.data.date);
             return (
               <li key={gig.id} className={`gig gig-${(gig.data.status ?? "upcoming").split(" ")[0]}`}>
-                <PrismicNextImage field={gig.data.poster} className="gig-poster shaky-img" fallbackAlt="" />
+                {isFilled.image(gig.data.poster) ? (
+                  <PrismicNextImage field={gig.data.poster} className="gig-poster shaky-img" fallbackAlt="" />
+                ) : (
+                  <div className="gig-poster gig-poster-missing">poster coming soon-ish</div>
+                )}
                 <div>
                   <p className="gig-date">{date ? dateFormat.format(date) : "Date: when we feel like it"}</p>
                   <h3>

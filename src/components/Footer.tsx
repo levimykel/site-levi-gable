@@ -21,7 +21,7 @@ export function Footer({ settings }: { settings: SettingsDocument | null }) {
       ) : null}
       <VisitorCounter />
       <EggCounter />
-      <p className="netscape">Best viewed in Netscape Navigator 4.0 at 640×480 with a Leffe in hand.</p>
+      <p className="netscape">Best viewed in Netscape Navigator 4.0 at 640×480 with a home-brew in hand.</p>
       <p className="hint">psst… try typing &ldquo;beer&rdquo;. Or don&rsquo;t. We&rsquo;re a website, not a cop.</p>
     </footer>
   );

@@ -25,12 +25,19 @@ export default function BandMembers({ slice }: BandMembersProps) {
               className={`member ${i % 2 === 0 ? "member-left" : "member-right"}`}
               style={{ "--rot": `${wobble(i + 11, 4)}deg` }}
             >
-              <PrismicNextImage
-                field={photo}
-                className="shaky-img"
-                data-shake={shake_level ?? "unhinged"}
-                fallbackAlt=""
-              />
+              {isFilled.image(photo) ? (
+                <PrismicNextImage
+                  field={photo}
+                  className="shaky-img"
+                  data-shake={shake_level ?? "unhinged"}
+                  fallbackAlt=""
+                />
+              ) : (
+                <div className="member-photo-missing shaky-img" data-shake={shake_level ?? "unhinged"}>
+                  photo pending
+                  <small>(he&rsquo;s at the bar)</small>
+                </div>
+              )}
               <div className="member-text">
                 <h3>{name}</h3>
                 {instrument ? <p className="instrument">{instrument}</p> : null}

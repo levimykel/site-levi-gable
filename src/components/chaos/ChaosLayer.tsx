@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from "react";
 import { findEgg, toast, TOAST_EVENT } from "./eggs";
-import { playBurp, playFeedbackScreech, playPowerChord, playYeaaap, randomPitch } from "./sounds";
+import { playBassDrop, playBurp, playDrumFill, playFeedbackScreech, playPowerChord, playYeaaap, randomPitch } from "./sounds";
 
 const KONAMI = [
   "ArrowUp",
@@ -23,7 +23,7 @@ const DEFAULT_AWAY_TITLES = [
   "come back, the beer is getting warm 🍺",
   "MRS misses you 🥺",
   "you left the amp on",
-  "Henry is looking for you",
+  "Vincent is still counting you in",
 ];
 
 type Toast = { id: number; message: string };
@@ -58,6 +58,9 @@ export function ChaosLayer({ awayTitles }: { awayTitles: string[] }) {
           </div>
         ))}
       </div>
+      <button type="button" className="mosh-button" onClick={moshPit}>
+        🤘 start a mosh pit
+      </button>
       <button
         type="button"
         className="sober-toggle"
@@ -102,6 +105,7 @@ function useSecretWords() {
       if (konamiIndex.current === KONAMI.length) {
         konamiIndex.current = 0;
         moshPit();
+        findEgg("konami");
         return;
       }
 
@@ -116,9 +120,14 @@ function useSecretWords() {
       } else if (typed.endsWith("beer")) {
         beerRain();
         findEgg("beer");
-      } else if (typed.endsWith("henry")) {
-        henryRun();
-        findEgg("henry");
+      } else if (typed.endsWith("mosh")) {
+        moshPit();
+      } else if (typed.endsWith("martin")) {
+        bassDrop();
+        findEgg("martin");
+      } else if (typed.endsWith("vincent")) {
+        drumFill();
+        findEgg("vincent");
       } else if (typed.endsWith("slop")) {
         const on = document.documentElement.classList.toggle("slop");
         toast(on ? "🤖 As an AI language model, I have improved this website." : "🤖 Slop mode off. Humans are back in charge.");
@@ -132,13 +141,11 @@ function useSecretWords() {
   }, []);
 }
 
-function moshPit() {
+export function moshPit() {
   const root = document.documentElement;
   if (root.classList.contains("moshing")) return;
   root.classList.add("moshing");
   playPowerChord();
-  playYeaaap({ pitch: 0.7 });
-  findEgg("konami");
   toast("🤘 MOSH PIT 🤘");
 
   const elements = Array.from(
@@ -194,14 +201,40 @@ function beerRain() {
   }
 }
 
-function henryRun() {
-  const henry = document.createElement("img");
-  henry.src = "/legacy/henry.jpg";
-  henry.alt = "Henry";
-  henry.className = "henry-run";
-  document.body.appendChild(henry);
-  playYeaaap({ pitch: 1.6 });
-  window.setTimeout(() => henry.remove(), 4200);
+function bassDrop() {
+  playBassDrop();
+  toast("🎸 Martin has entered the low end");
+  document.body.animate(
+    [
+      { transform: "none" },
+      { transform: "translateY(18px) scaleY(0.97)", offset: 0.15 },
+      { transform: "translateY(-6px)", offset: 0.3 },
+      { transform: "translateY(10px) scaleY(0.98)", offset: 0.5 },
+      { transform: "none" },
+    ],
+    { duration: 2200, easing: "ease-out" },
+  );
+}
+
+const DRUM_FILL = [0, 0.15, 0.3, 0.4, 0.5, 0.6, 0.68, 0.76, 0.84, 0.92, 1.0, 1.08];
+
+function drumFill() {
+  playDrumFill(DRUM_FILL);
+  toast("🥁 1, 2, 3, 4!");
+  const headings = Array.from(document.querySelectorAll<HTMLElement>("main h1, main h2, main h3"));
+  for (const [i, at] of DRUM_FILL.entries()) {
+    window.setTimeout(() => {
+      const target = headings[i % Math.max(1, headings.length)];
+      target?.animate(
+        [{ transform: "none" }, { transform: `scale(1.25) rotate(${i % 2 === 0 ? -4 : 4}deg)` }, { transform: "none" }],
+        { duration: 120 },
+      );
+      document.documentElement.animate(
+        [{ transform: "none" }, { transform: `translateX(${i % 2 === 0 ? -6 : 6}px)` }, { transform: "none" }],
+        { duration: 80 },
+      );
+    }, at * 1000);
+  }
 }
 
 function useDrunkIdle(setDrunk: (drunk: boolean) => void) {

@@ -14,7 +14,7 @@ import { getSettings } from "@/lib/data";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ChaosLayer } from "@/components/chaos/ChaosLayer";
-import { HiddenHenry } from "@/components/chaos/HiddenHenry";
+import { HiddenPick } from "@/components/chaos/HiddenPick";
 import { BeerPolicy } from "@/components/chaos/BeerPolicy";
 import "./globals.css";
 
@@ -28,7 +28,7 @@ const metal = Metal_Mania({ weight: "400", subsets: ["latin"], variable: "--font
 export const metadata: Metadata = {
   title: { default: "MRS — loud, home-brewed, slightly sticky", template: "%s | MRS" },
   description: "MRS is a rock / grunge / punk band from Paris that brews beer and makes AI slop.",
-  icons: { icon: "/legacy/henry.jpg" },
+  icons: { icon: "/mrs-logo.jpg" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -45,7 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Suspense>
           <SettingsFooter />
         </Suspense>
-        <HiddenHenry />
+        <HiddenPick />
         <BeerPolicy />
       </body>
       <PrismicPreview repositoryName={repositoryName} />

@@ -19,4 +19,4 @@ Content models are managed with the Prismic CLI (`npx prismic --help`), never by
 
 ## Easter eggs
 
-There are 13. We're not telling you where they are. Start typing.
+There are 14. We're not telling you where they are. Start typing.
