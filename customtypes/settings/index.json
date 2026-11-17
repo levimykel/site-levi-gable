@@ -65,6 +65,32 @@
           "multi": "paragraph,strong,em,hyperlink"
         },
         "type": "StructuredText"
+      },
+      "shouts": {
+        "config": {
+          "fields": {
+            "name": {
+              "config": {
+                "label": "Who"
+              },
+              "type": "Text"
+            },
+            "image": {
+              "config": {
+                "label": "Cut-out (transparent PNG)"
+              },
+              "type": "Image"
+            },
+            "text": {
+              "config": {
+                "label": "What they shout"
+              },
+              "type": "Text"
+            }
+          },
+          "label": "Shouts (cut-outs that pop up with a speech bubble)"
+        },
+        "type": "Group"
       }
     }
   },

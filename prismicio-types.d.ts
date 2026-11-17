@@ -571,6 +571,41 @@ export interface SettingsDocumentDataAwayTitlesItem {
 }
 
 /**
+ * Item in *Settings → Shouts (cut-outs that pop up with a speech bubble)*
+ */
+export interface SettingsDocumentDataShoutsItem {
+	/**
+	 * Who field in *Settings → Shouts (cut-outs that pop up with a speech bubble)*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.shouts[].name
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	name: prismic.KeyTextField;
+	
+	/**
+	 * Cut-out (transparent PNG) field in *Settings → Shouts (cut-outs that pop up with a speech bubble)*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.shouts[].image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+	
+	/**
+	 * What they shout field in *Settings → Shouts (cut-outs that pop up with a speech bubble)*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.shouts[].text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	text: prismic.KeyTextField;
+}
+
+/**
  * Content for Settings documents
  */
 interface SettingsDocumentData {
@@ -650,6 +685,17 @@ interface SettingsDocumentData {
 	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
 	 */
 	footer_text: prismic.RichTextField;
+	
+	/**
+	 * Shouts (cut-outs that pop up with a speech bubble) field in *Settings*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.shouts[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	shouts: prismic.GroupField<Simplify<SettingsDocumentDataShoutsItem>>;
 }
 
 /**
@@ -1514,6 +1560,7 @@ declare module "@prismicio/client" {
 			SettingsDocumentData,
 			SettingsDocumentDataMarqueeItem,
 			SettingsDocumentDataAwayTitlesItem,
+			SettingsDocumentDataShoutsItem,
 			AllDocumentTypes,
 			BandMembersSlice,
 			BandMembersSliceDefaultPrimaryMembersItem,
