@@ -62,7 +62,7 @@
       "setlist": {
         "config": {
           "label": "Set list",
-          "multi": "em"
+          "multi": "list-item,strong,em"
         },
         "type": "StructuredText"
       },
