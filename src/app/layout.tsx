@@ -8,12 +8,14 @@ import {
   Rubik_Wet_Paint,
   Special_Elite,
 } from "next/font/google";
+import { isFilled } from "@prismicio/client";
 import { PrismicPreview, getPreviewRef } from "@prismicio/next";
 import { repositoryName } from "@/prismicio";
 import { getSettings } from "@/lib/data";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ChaosLayer } from "@/components/chaos/ChaosLayer";
+import { Shouts } from "@/components/chaos/Shouts";
 import { HiddenPick } from "@/components/chaos/HiddenPick";
 import { BeerPolicy } from "@/components/chaos/BeerPolicy";
 import "./globals.css";
@@ -59,6 +61,13 @@ async function SettingsHeader() {
     <>
       <Header settings={settings} />
       <ChaosLayer awayTitles={settings?.data.away_titles.map((t) => t.text ?? "").filter(Boolean) ?? []} />
+      <Shouts
+        shouts={
+          settings?.data.shouts.flatMap((s) =>
+            s.text && isFilled.image(s.image) ? [{ name: s.name ?? "", text: s.text, image: s.image }] : [],
+          ) ?? []
+        }
+      />
     </>
   );
 }

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { findEgg, toast } from "./chaos/eggs";
 import { playYeaaap, randomPitch } from "./chaos/sounds";
+import { toeRack } from "./chaos/ChaosLayer";
 
 const COMPLAINTS = ["ow", "OW", "please stop", "I'm calling my manager", "fine. FINE."];
 
@@ -19,7 +20,10 @@ export function Logo({ title }: { title: string }) {
         pokes.current += 1;
         playYeaaap({ pitch: randomPitch() });
         if (pokes.current >= 3) toast(COMPLAINTS[Math.min(pokes.current - 3, COMPLAINTS.length - 1)]);
-        if (pokes.current === 5) findEgg("logo");
+        if (pokes.current === 5) {
+          findEgg("logo");
+          toeRack();
+        }
       }}
     >
       <Image src="/mrs-logo.jpg" alt={title} width={150} height={150} preload />

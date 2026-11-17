@@ -2,6 +2,9 @@ import { isFilled } from "@prismicio/client";
 import { PrismicNextLink } from "@prismicio/next";
 import type { SettingsDocument } from "../../prismicio-types";
 import { Logo } from "./Logo";
+import { withCool } from "./CoolAndGood";
+import { EggTrigger } from "./chaos/EggTrigger";
+import { LanguageSwitcher } from "./chaos/LanguageSwitcher";
 
 const FALLBACK_MARQUEE = [
   "NEW ALBUM NEVER",
@@ -20,7 +23,11 @@ export function Header({ settings }: { settings: SettingsDocument | null }) {
     <header className="site-header">
       <div className="header-row">
         <Logo title={title} />
-        {settings?.data.tagline ? <p className="tagline">{settings.data.tagline}</p> : null}
+        {settings?.data.tagline ? (
+          <p className="tagline">
+            <EggTrigger egg="desert">{settings.data.tagline}</EggTrigger>
+          </p>
+        ) : null}
         <nav>
           <ul>
             {settings?.data.navigation.filter(isFilled.link).map((link) => (
@@ -30,11 +37,12 @@ export function Header({ settings }: { settings: SettingsDocument | null }) {
             ))}
           </ul>
         </nav>
+        <LanguageSwitcher />
       </div>
       <div className="marquee" aria-hidden="true">
         <div className="marquee-track">
           {[...items, ...items, ...items].map((text, i) => (
-            <span key={i}>★ {text} </span>
+            <span key={i}>★ {withCool(text ?? "")} </span>
           ))}
         </div>
       </div>

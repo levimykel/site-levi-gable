@@ -2,6 +2,8 @@ import { isFilled, type Content } from "@prismicio/client";
 import { PrismicNextImage } from "@prismicio/next";
 import { PrismicRichText, type SliceComponentProps } from "@prismicio/react";
 import { wobble } from "@/lib/wobble";
+import { EggTrigger, ShoutTrigger } from "@/components/chaos/EggTrigger";
+import { isTrigger } from "@/components/chaos/triggers";
 
 export type BandMembersProps = SliceComponentProps<Content.BandMembersSlice>;
 
@@ -26,12 +28,14 @@ export default function BandMembers({ slice }: BandMembersProps) {
               style={{ "--rot": `${wobble(i + 11, 4)}deg` }}
             >
               {isFilled.image(photo) ? (
-                <PrismicNextImage
-                  field={photo}
-                  className="shaky-img"
-                  data-shake={shake_level ?? "unhinged"}
-                  fallbackAlt=""
-                />
+                <ShoutTrigger name={name ?? ""}>
+                  <PrismicNextImage
+                    field={photo}
+                    className="shaky-img"
+                    data-shake={shake_level ?? "unhinged"}
+                    fallbackAlt=""
+                  />
+                </ShoutTrigger>
               ) : (
                 <div className="member-photo-missing shaky-img" data-shake={shake_level ?? "unhinged"}>
                   photo pending
@@ -40,7 +44,15 @@ export default function BandMembers({ slice }: BandMembersProps) {
               )}
               <div className="member-text">
                 <h3>{name}</h3>
-                {instrument ? <p className="instrument">{instrument}</p> : null}
+                {instrument ? (
+                  <p className="instrument">
+                    {member.uid && isTrigger(member.uid) ? (
+                      <EggTrigger egg={member.uid}>{instrument}</EggTrigger>
+                    ) : (
+                      instrument
+                    )}
+                  </p>
+                ) : null}
                 <div className="quote">
                   <PrismicRichText field={quote} />
                 </div>

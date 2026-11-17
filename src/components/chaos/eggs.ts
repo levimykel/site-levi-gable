@@ -8,6 +8,7 @@ export const EGGS = {
   desert: "Visited the desert rock region",
   fresco: "Fresco y bueno",
   falling: "Fell for Falling",
+  toerack: "Toe Rack (it's Return of the Rat)",
   yeaaap: "Certified Yeaaaper (50 yeaaaps)",
   drunk: "Stayed too long at the bar",
   away: "You left. We noticed.",

@@ -3,6 +3,7 @@ import { asText } from "@prismicio/client";
 import { PrismicNextImage } from "@prismicio/next";
 import type { SliceComponentProps } from "@prismicio/react";
 import { pick, wobble } from "@/lib/wobble";
+import { EggTrigger } from "@/components/chaos/EggTrigger";
 
 export type ChaosHeroProps = SliceComponentProps<Content.ChaosHeroSlice>;
 
@@ -20,19 +21,21 @@ export default function ChaosHero({ slice }: ChaosHeroProps) {
       style={{ "--chaos": chaos / 11 }}
     >
       <h1 aria-label={title}>
-        {title.split("").map((letter, i) => (
-          <span
-            key={i}
-            aria-hidden="true"
-            style={{
-              fontFamily: pick(FONTS, i + 1),
-              transform: `rotate(${wobble(i + 3, 18 * (chaos / 11))}deg) translateY(${wobble(i + 7, 20 * (chaos / 11))}px)`,
-              animationDelay: `${wobble(i, 1)}s`,
-            }}
-          >
-            {letter === " " ? " " : letter}
-          </span>
-        ))}
+        <EggTrigger egg="mrs">
+          {title.split("").map((letter, i) => (
+            <span
+              key={i}
+              aria-hidden="true"
+              style={{
+                fontFamily: pick(FONTS, i + 1),
+                transform: `rotate(${wobble(i + 3, 18 * (chaos / 11))}deg) translateY(${wobble(i + 7, 20 * (chaos / 11))}px)`,
+                animationDelay: `${wobble(i, 1)}s`,
+              }}
+            >
+              {letter === " " ? " " : letter}
+            </span>
+          ))}
+        </EggTrigger>
       </h1>
       {slice.primary.subtitle ? <p className="chaos-hero-subtitle">{slice.primary.subtitle}</p> : null}
       <PrismicNextImage field={slice.primary.image} className="shaky-img chaos-hero-img" fallbackAlt="" />

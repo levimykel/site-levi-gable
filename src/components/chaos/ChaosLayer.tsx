@@ -7,7 +7,6 @@ import {
   playBurp,
   playDesertRiff,
   playDrumFill,
-  playFallingRiff,
   playFeedbackScreech,
   playPowerChord,
   playYeaaap,
@@ -50,7 +49,6 @@ export function ChaosLayer({ awayTitles }: { awayTitles: string[] }) {
   useScrollTilt();
   useBubbleTrail();
   useBottomOfTheBarrel();
-  useNickShout();
 
   useEffect(() => {
     document.documentElement.classList.toggle("drunk", drunk && !sober);
@@ -121,13 +119,11 @@ function useSecretWords() {
       }
 
       if (event.key.length !== 1) return;
-      buffer.current = (buffer.current + event.key.toLowerCase()).slice(-12);
+      buffer.current = (buffer.current + event.key.toLowerCase()).slice(-16);
       const typed = buffer.current;
 
       if (typed.endsWith("mrs")) {
-        playFeedbackScreech();
-        flash();
-        findEgg("mrs");
+        feedback();
       } else if (typed.endsWith("beer")) {
         beerRain();
         findEgg("beer");
@@ -135,15 +131,15 @@ function useSecretWords() {
         moshPit();
       } else if (typed.endsWith("martin")) {
         bassDrop();
-        findEgg("martin");
       } else if (typed.endsWith("vincent")) {
         drumFill();
-        findEgg("vincent");
+      } else if (typed.endsWith("toerack") || typed.endsWith("toe rack")) {
+        toeRack();
       } else if (typed.endsWith("slop")) {
         toggleSlop();
       } else if (typed.endsWith("desert")) {
         desertRockRegion();
-      } else if (typed.endsWith("fresco") || typed.endsWith("fraise")) {
+      } else if (typed.endsWith("fresco") || typed.endsWith("frais")) {
         frescoYBueno();
       } else if (typed.endsWith("falling")) {
         falling();
@@ -208,13 +204,12 @@ export function toggleSlop() {
   findEgg("slop");
 }
 
-export const NICK_SHOUT = "🎤 Nick: “We are MRS! We come from the desert rock region.”";
-
 export function desertRockRegion() {
   const root = document.documentElement;
   if (root.classList.contains("desert")) return;
   root.classList.add("desert");
-  toast(NICK_SHOUT);
+  toast("🌵 Welcome to the desert rock region.");
+  shout("Nick");
   findEgg("desert");
   const seconds = playDesertRiff();
   for (let i = 0; i < 3; i++) {
@@ -236,41 +231,96 @@ export function desertRockRegion() {
   window.setTimeout(() => root.classList.remove("desert"), Math.max(6500, seconds * 1000 + 3500));
 }
 
-const FRESCO = ["🍓 Fresco y bueno!", "🍓 Fraise et bonne !", "🍓 Cool and good."];
+const FRESCO = ["🧊 Fresco y bueno!", "🧊 Frais et bon !", "🧊 Cool and good."];
 
 export function frescoYBueno() {
+  const root = document.documentElement;
   findEgg("fresco");
   FRESCO.forEach((line, i) => window.setTimeout(() => toast(line), i * 700));
-  for (let i = 0; i < 45; i++) {
-    const berry = document.createElement("span");
-    berry.className = "beer-drop";
-    berry.textContent = Math.random() > 0.15 ? "🍓" : "🧊";
-    berry.style.left = `${Math.random() * 100}vw`;
-    berry.style.fontSize = `${1 + Math.random() * 2}rem`;
-    document.body.appendChild(berry);
-    berry
+  const stop = playSong("fresco-y-bueno", 7000);
+  root.classList.add("cool");
+  window.setTimeout(() => {
+    root.classList.remove("cool");
+    stop();
+  }, 7000);
+  for (let i = 0; i < 40; i++) {
+    const cube = document.createElement("span");
+    cube.className = "beer-drop";
+    cube.textContent = Math.random() > 0.2 ? "🧊" : "❄️";
+    cube.style.left = `${Math.random() * 100}vw`;
+    cube.style.fontSize = `${1 + Math.random() * 2}rem`;
+    document.body.appendChild(cube);
+    cube
       .animate(
         [{ transform: "translateY(0) rotate(0)" }, { transform: `translateY(110vh) rotate(${(Math.random() - 0.5) * 720}deg)` }],
         { duration: 2600 + Math.random() * 1400, delay: Math.random() * 1800, easing: "ease-in", fill: "both" },
       )
-      .finished.then(() => berry.remove(), () => berry.remove());
+      .finished.then(() => cube.remove(), () => cube.remove());
   }
 }
 
-function falling() {
+function playSong(song: string, ms: number) {
+  const audio = document.querySelector<HTMLAudioElement>(`audio[data-song="${song}"]`);
+  if (!audio) return () => {};
+  audio.currentTime = 0;
+  void audio.play().catch(() => {});
+  const timer = window.setTimeout(() => audio.pause(), ms);
+  return () => {
+    window.clearTimeout(timer);
+    audio.pause();
+  };
+}
+
+export function falling() {
   findEgg("falling");
-  toast("🎸 Falling (MRS original). Intro in B. Hold on.");
-  const seconds = playFallingRiff();
-  const main = document.querySelector("main");
-  main?.animate(
+  toast("🎸 Falling (MRS original). Hold on.");
+  playSong("falling", 6500);
+  document.querySelector("main")?.animate(
     [
       { transform: "none" },
       { transform: "translateY(35vh) rotate(4deg)", offset: 0.4 },
       { transform: "translateY(80vh) rotate(-8deg)", offset: 0.75 },
       { transform: "translateY(120vh) rotate(12deg)", opacity: 0.2 },
     ],
-    { duration: seconds * 1000, easing: "ease-in" },
+    { duration: 6000, easing: "ease-in" },
   );
+}
+
+export function feedback() {
+  playFeedbackScreech();
+  flash();
+  findEgg("mrs");
+}
+
+export function toeRack() {
+  findEgg("toerack");
+  toast("🦶 TOE RACK!");
+  window.setTimeout(() => toast("(It's “Return of the Rat” by Wipers. Don't tell Nick.)"), 1200);
+  playPowerChord();
+  for (let i = 0; i < 24; i++) {
+    const foot = document.createElement("span");
+    foot.className = "beer-drop";
+    foot.textContent = "🦶";
+    foot.style.top = `${70 + Math.random() * 25}vh`;
+    foot.style.fontSize = `${1.5 + Math.random() * 2}rem`;
+    document.body.appendChild(foot);
+    foot
+      .animate(
+        [
+          { transform: "translateX(-10vw) translateY(0)" },
+          { transform: "translateX(50vw) translateY(-30px)", offset: 0.5 },
+          { transform: "translateX(115vw) translateY(0)" },
+        ],
+        { duration: 2200 + Math.random() * 1200, delay: i * 90, easing: "steps(18)", fill: "both" },
+      )
+      .finished.then(() => foot.remove(), () => foot.remove());
+  }
+}
+
+export const SHOUT_EVENT = "mrs:shout";
+
+export function shout(name?: string) {
+  window.dispatchEvent(new CustomEvent(SHOUT_EVENT, { detail: name }));
 }
 
 export function beerRain() {
@@ -294,7 +344,8 @@ export function beerRain() {
   }
 }
 
-function bassDrop() {
+export function bassDrop() {
+  findEgg("martin");
   playBassDrop();
   toast("🎸 Martin has entered the low end");
   document.body.animate(
@@ -311,7 +362,8 @@ function bassDrop() {
 
 const DRUM_FILL = [0, 0.15, 0.3, 0.4, 0.5, 0.6, 0.68, 0.76, 0.84, 0.92, 1.0, 1.08];
 
-function drumFill() {
+export function drumFill() {
+  findEgg("vincent");
   playDrumFill(DRUM_FILL);
   toast("🥁 1, 2, 3, 4!");
   const headings = Array.from(document.querySelectorAll<HTMLElement>("main h1, main h2, main h3"));
@@ -431,9 +483,3 @@ function useBottomOfTheBarrel() {
   }, []);
 }
 
-function useNickShout() {
-  useEffect(() => {
-    const timer = window.setTimeout(() => toast(NICK_SHOUT), 45_000);
-    return () => window.clearTimeout(timer);
-  }, []);
-}

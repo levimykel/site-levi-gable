@@ -77,7 +77,7 @@ function strum(ctx: AudioContext, destination: AudioNode, start: number, seconds
   });
 }
 
-const NOTE = { A2: 110, B2: 123.47, Cs3: 138.59, D3: 146.83, E2: 82.41, G2: 98, Bb2: 116.54 };
+const NOTE = { A2: 110, E2: 82.41, G2: 98, Bb2: 116.54 };
 
 function playRiff(riff: [keyof typeof NOTE, number][], beat: number) {
   const ctx = getContext();
@@ -98,22 +98,6 @@ function playRiff(riff: [keyof typeof NOTE, number][], beat: number) {
   output.gain.setValueAtTime(0.22, at);
   output.gain.exponentialRampToValueAtTime(0.0001, at + 0.6);
   return at - start;
-}
-
-export function playFallingRiff() {
-  return playRiff(
-    [
-      ["B2", 1],
-      ["Cs3", 1],
-      ["D3", 1],
-      ["B2", 1],
-      ["A2", 2],
-      ["B2", 1],
-      ["D3", 1],
-      ["Cs3", 2],
-    ],
-    0.32,
-  );
 }
 
 export function playDesertRiff() {
