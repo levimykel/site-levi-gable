@@ -35,6 +35,9 @@
             },
             "music": {
               "type": "SharedSlice"
+            },
+            "merch_table": {
+              "type": "SharedSlice"
             }
           }
         },

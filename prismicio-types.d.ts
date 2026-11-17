@@ -316,7 +316,7 @@ interface GigDocumentData {
  */
 export type GigDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<GigDocumentData>, "gig", Lang>;
 
-type HomepageDocumentDataSlicesSlice = ChaosHeroSlice | BandMembersSlice | BeerCellarSlice | GigListSlice | YeaaapButtonSlice | TheBarSlice | VideoSlice | ManifestoSlice | SlopGallerySlice | MusicSlice
+type HomepageDocumentDataSlicesSlice = ChaosHeroSlice | BandMembersSlice | BeerCellarSlice | GigListSlice | YeaaapButtonSlice | TheBarSlice | VideoSlice | ManifestoSlice | SlopGallerySlice | MusicSlice | MerchTableSlice
 
 /**
  * Content for Homepage documents
@@ -376,7 +376,7 @@ interface HomepageDocumentData {
  */
 export type HomepageDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<HomepageDocumentData>, "homepage", Lang>;
 
-type PageDocumentDataSlicesSlice = ChaosHeroSlice | BandMembersSlice | BeerCellarSlice | GigListSlice | YeaaapButtonSlice | TheBarSlice | VideoSlice | ManifestoSlice | SlopGallerySlice | MusicSlice
+type PageDocumentDataSlicesSlice = ChaosHeroSlice | BandMembersSlice | BeerCellarSlice | GigListSlice | YeaaapButtonSlice | TheBarSlice | VideoSlice | ManifestoSlice | SlopGallerySlice | MusicSlice | MerchTableSlice
 
 /**
  * Content for Page documents
@@ -864,6 +864,140 @@ type ManifestoSliceVariation = ManifestoSliceDefault
 export type ManifestoSlice = prismic.SharedSlice<"manifesto", ManifestoSliceVariation>;
 
 /**
+ * Item in *Merch Table → Default → Primary → Items*
+ */
+export interface MerchTableSliceDefaultPrimaryItemsItem {
+	/**
+	 * Image field in *Merch Table → Default → Primary → Items*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: merch_table.default.primary.items[].image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+	
+	/**
+	 * Name field in *Merch Table → Default → Primary → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: merch_table.default.primary.items[].name
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	name: prismic.KeyTextField;
+	
+	/**
+	 * Price (€) field in *Merch Table → Default → Primary → Items*
+	 *
+	 * - **Field Type**: Number
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: merch_table.default.primary.items[].price
+	 * - **Documentation**: https://prismic.io/docs/fields/number
+	 */
+	price: prismic.NumberField;
+	
+	/**
+	 * Sizes field in *Merch Table → Default → Primary → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: merch_table.default.primary.items[].sizes
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	sizes: prismic.KeyTextField;
+	
+	/**
+	 * Description field in *Merch Table → Default → Primary → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: merch_table.default.primary.items[].description
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	description: prismic.KeyTextField;
+	
+	/**
+	 * Stock field in *Merch Table → Default → Primary → Items*
+	 *
+	 * - **Field Type**: Select
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: in stock
+	 * - **API ID Path**: merch_table.default.primary.items[].stock
+	 * - **Documentation**: https://prismic.io/docs/fields/select
+	 */
+	stock: prismic.SelectField<"in stock" | "almost gone" | "sold out" | "only at gigs", "filled">;
+}
+
+/**
+ * Primary content in *Merch Table → Default → Primary*
+ */
+export interface MerchTableSliceDefaultPrimary {
+	/**
+	 * Heading field in *Merch Table → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: merch_table.default.primary.heading
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	heading: prismic.RichTextField;
+	
+	/**
+	 * Intro field in *Merch Table → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: merch_table.default.primary.intro
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	intro: prismic.RichTextField;
+	
+	/**
+	 * Items field in *Merch Table → Default → Primary*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: merch_table.default.primary.items[]
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	items: prismic.GroupField<Simplify<MerchTableSliceDefaultPrimaryItemsItem>>;
+	
+	/**
+	 * How to buy (link) field in *Merch Table → Default → Primary*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: merch_table.default.primary.buy_link
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	buy_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Default variation for Merch Table Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type MerchTableSliceDefault = prismic.SharedSliceVariation<"default", Simplify<MerchTableSliceDefaultPrimary>, never>;
+
+/**
+ * Slice variation for *Merch Table*
+ */
+type MerchTableSliceVariation = MerchTableSliceDefault
+
+/**
+ * Merch Table Shared Slice
+ *
+ * - **API ID**: `merch_table`
+ * - **Description**: *None*
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type MerchTableSlice = prismic.SharedSlice<"merch_table", MerchTableSliceVariation>;
+
+/**
  * Item in *Music → Default → Primary → Tracks*
  */
 export interface MusicSliceDefaultPrimaryTracksItem {
@@ -1297,6 +1431,11 @@ declare module "@prismicio/client" {
 			ManifestoSliceDefaultPrimary,
 			ManifestoSliceVariation,
 			ManifestoSliceDefault,
+			MerchTableSlice,
+			MerchTableSliceDefaultPrimaryItemsItem,
+			MerchTableSliceDefaultPrimary,
+			MerchTableSliceVariation,
+			MerchTableSliceDefault,
 			MusicSlice,
 			MusicSliceDefaultPrimaryTracksItem,
 			MusicSliceDefaultPrimary,

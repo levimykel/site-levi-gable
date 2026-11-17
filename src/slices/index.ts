@@ -5,6 +5,7 @@ import BeerCellar from "./BeerCellar";
 import ChaosHero from "./ChaosHero";
 import GigList from "./GigList";
 import Manifesto from "./Manifesto";
+import MerchTable from "./MerchTable";
 import Music from "./Music";
 import SlopGallery from "./SlopGallery";
 import TheBar from "./TheBar";
@@ -17,6 +18,7 @@ export const components = {
 	chaos_hero: ChaosHero,
 	gig_list: GigList,
 	manifesto: Manifesto,
+	merch_table: MerchTable,
 	music: Music,
 	slop_gallery: SlopGallery,
 	the_bar: TheBar,

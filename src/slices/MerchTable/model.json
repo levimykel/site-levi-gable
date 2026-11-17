@@ -1,0 +1,91 @@
+{
+  "id": "merch_table",
+  "name": "Merch Table",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Default",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "name": "Default",
+      "primary": {
+        "heading": {
+          "config": {
+            "label": "Heading",
+            "single": "heading2"
+          },
+          "type": "StructuredText"
+        },
+        "intro": {
+          "config": {
+            "label": "Intro",
+            "multi": "hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "items": {
+          "config": {
+            "fields": {
+              "image": {
+                "config": {
+                  "label": "Image"
+                },
+                "type": "Image"
+              },
+              "name": {
+                "config": {
+                  "label": "Name"
+                },
+                "type": "Text"
+              },
+              "price": {
+                "config": {
+                  "label": "Price (€)",
+                  "min": 0
+                },
+                "type": "Number"
+              },
+              "sizes": {
+                "config": {
+                  "label": "Sizes"
+                },
+                "type": "Text"
+              },
+              "description": {
+                "config": {
+                  "label": "Description"
+                },
+                "type": "Text"
+              },
+              "stock": {
+                "config": {
+                  "default_value": "in stock",
+                  "label": "Stock",
+                  "options": [
+                    "in stock",
+                    "almost gone",
+                    "sold out",
+                    "only at gigs"
+                  ]
+                },
+                "type": "Select"
+              }
+            },
+            "label": "Items"
+          },
+          "type": "Group"
+        },
+        "buy_link": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "How to buy (link)",
+            "select": "web"
+          },
+          "type": "Link"
+        }
+      },
+      "version": ""
+    }
+  ]
+}
