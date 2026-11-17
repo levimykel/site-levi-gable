@@ -5,13 +5,16 @@ export const EGGS = {
   martin: "Martin dropped the bass",
   vincent: "Vincent counted you in",
   slop: "Slop mode: maximum AI",
+  desert: "Visited the desert rock region",
+  fresco: "Fresco y bueno",
+  falling: "Fell for Falling",
   yeaaap: "Certified Yeaaaper (50 yeaaaps)",
   drunk: "Stayed too long at the bar",
   away: "You left. We noticed.",
   logo: "Stop poking the logo",
   pick: "Found Nick's lost pick",
   cookies: "Accepted the beer policy twice",
-  lost: "Got lost after practice (404)",
+  lost: "Got lost in the desert rock region (404)",
   bottom: "Reached the bottom of the barrel",
 } as const;
 

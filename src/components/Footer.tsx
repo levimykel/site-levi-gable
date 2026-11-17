@@ -3,6 +3,7 @@ import { PrismicNextLink } from "@prismicio/next";
 import { PrismicRichText } from "@prismicio/react";
 import type { SettingsDocument } from "../../prismicio-types";
 import { EggCounter } from "./chaos/EggCounter";
+import { AiDisclaimer, SignOff } from "./chaos/FooterJokes";
 import { VisitorCounter } from "./chaos/VisitorCounter";
 
 export function Footer({ settings }: { settings: SettingsDocument | null }) {
@@ -14,6 +15,9 @@ export function Footer({ settings }: { settings: SettingsDocument | null }) {
       ) : (
         <p>© MRS. All rights reversed.</p>
       )}
+      <AiDisclaimer />
+      <SignOff />
+      <p className="made-in">Proudly made in the desert rock region (Paris, France).</p>
       {settings && isFilled.link(settings.data.instagram) ? (
         <PrismicNextLink field={settings.data.instagram} className="insta">
           📸 follow us on the gram

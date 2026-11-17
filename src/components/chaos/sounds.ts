@@ -77,6 +77,59 @@ function strum(ctx: AudioContext, destination: AudioNode, start: number, seconds
   });
 }
 
+const NOTE = { A2: 110, B2: 123.47, Cs3: 138.59, D3: 146.83, E2: 82.41, G2: 98, Bb2: 116.54 };
+
+function playRiff(riff: [keyof typeof NOTE, number][], beat: number) {
+  const ctx = getContext();
+  const { input, output } = amp(ctx, { drive: 90 });
+  const start = ctx.currentTime;
+  let at = start;
+  for (const [note, beats] of riff) {
+    const root = NOTE[note];
+    for (const [i, frequency] of [root, root * 1.5, root * 2].entries()) {
+      const source = ctx.createBufferSource();
+      source.buffer = pluck(ctx, frequency, beats * beat + 0.4);
+      source.connect(input);
+      source.start(at + i * 0.012);
+      source.stop(at + beats * beat);
+    }
+    at += beats * beat;
+  }
+  output.gain.setValueAtTime(0.22, at);
+  output.gain.exponentialRampToValueAtTime(0.0001, at + 0.6);
+  return at - start;
+}
+
+export function playFallingRiff() {
+  return playRiff(
+    [
+      ["B2", 1],
+      ["Cs3", 1],
+      ["D3", 1],
+      ["B2", 1],
+      ["A2", 2],
+      ["B2", 1],
+      ["D3", 1],
+      ["Cs3", 2],
+    ],
+    0.32,
+  );
+}
+
+export function playDesertRiff() {
+  return playRiff(
+    [
+      ["E2", 0.5],
+      ["E2", 0.5],
+      ["G2", 1],
+      ["E2", 0.5],
+      ["Bb2", 0.5],
+      ["A2", 2],
+    ],
+    0.42,
+  );
+}
+
 export function playPowerChord(seconds = 1.8) {
   const ctx = getContext();
   const { input, output } = amp(ctx);

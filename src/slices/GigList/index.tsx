@@ -38,17 +38,25 @@ export default async function GigList({ slice }: GigListProps) {
               <li key={gig.id} className={`gig gig-${(gig.data.status ?? "upcoming").split(" ")[0]}`}>
                 {isFilled.image(gig.data.poster) ? (
                   <PrismicNextImage field={gig.data.poster} className="gig-poster shaky-img" fallbackAlt="" />
+                ) : isFilled.image(gig.data.photos[0]?.image) ? (
+                  <PrismicNextImage field={gig.data.photos[0].image} className="gig-poster shaky-img" fallbackAlt="" />
                 ) : (
                   <div className="gig-poster gig-poster-missing">poster coming soon-ish</div>
                 )}
                 <div>
                   <p className="gig-date">{date ? dateFormat.format(date) : "Date: when we feel like it"}</p>
                   <h3>
-                    {gig.data.venue}
+                    <PrismicNextLink document={gig}>{gig.data.venue}</PrismicNextLink>
                     {gig.data.city ? <span className="gig-city"> — {gig.data.city}</span> : null}
                   </h3>
                   {gig.data.notes ? <p>{gig.data.notes}</p> : null}
                   <p className="gig-status">{gig.data.status}</p>
+                  {gig.data.photos.length > 0 || gig.data.clips.length > 0 ? (
+                    <PrismicNextLink document={gig} className="gig-evidence">
+                      see the evidence ({gig.data.photos.length} photos
+                      {gig.data.clips.length > 0 ? `, ${gig.data.clips.length} clips` : ""}) →
+                    </PrismicNextLink>
+                  ) : null}
                   {isFilled.link(gig.data.tickets) ? (
                     <PrismicNextLink field={gig.data.tickets} className="chaos-button">
                       Tickets / info

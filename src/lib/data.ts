@@ -32,3 +32,12 @@ export async function getGigs(ref?: string) {
   cacheTagPrismicPages(gigs);
   return gigs;
 }
+
+export async function getGig(uid: string, ref?: string) {
+  "use cache";
+  cacheLife("max");
+  const client = createClient();
+  const gig = await client.getByUID("gig", uid, { ref }).catch(() => notFound());
+  cacheTagPrismicPages([gig]);
+  return gig;
+}
