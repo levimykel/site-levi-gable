@@ -1206,7 +1206,7 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
 .shout {
   --h: min(42svh, 320px, 60vw);
   --w: calc(var(--h) * var(--ratio));
-  --head: calc(var(--h) * 0.11);
+  --head: calc(var(--h) * 0.17);
   --tail: 1.4rem;
   position: fixed;
   z-index: 96;
