@@ -6,7 +6,7 @@ import { PrismicNextImage } from "@prismicio/next";
 import { SHOUT_EVENT } from "./ChaosLayer";
 import { withCool } from "../CoolAndGood";
 
-export type Shout = { name: string; text: string; image: ImageField };
+export type Shout = { name: string; text: string; image: ImageField; mouthX: number; mouthY: number };
 
 type Showing = Shout & { id: number; side: "left" | "right" };
 
@@ -38,7 +38,8 @@ export function Shouts({ shouts }: { shouts: Shout[] }) {
       }, ms);
     };
 
-    const onShout = (event: Event) => show(event instanceof CustomEvent && typeof event.detail === "string" ? event.detail : undefined);
+    const onShout = (event: Event) =>
+      show(event instanceof CustomEvent && typeof event.detail === "string" ? event.detail : undefined);
 
     window.addEventListener(SHOUT_EVENT, onShout);
     schedule(FIRST_SHOUT_MS);
@@ -50,9 +51,15 @@ export function Shouts({ shouts }: { shouts: Shout[] }) {
   }, [shouts]);
 
   if (!showing) return null;
+  const { width = 1, height = 1 } = showing.image.dimensions ?? {};
 
   return (
-    <div key={showing.id} className={`shout shout-${showing.side}`} role="status">
+    <div
+      key={showing.id}
+      className={`shout shout-${showing.side}`}
+      role="status"
+      style={{ "--ratio": width / height, "--mx": showing.mouthX / 100, "--my": showing.mouthY / 100 }}
+    >
       <PrismicNextImage field={showing.image} className="shout-cutout" fallbackAlt="" />
       <p className="shout-bubble">
         <span className="shout-name">{showing.name}</span>

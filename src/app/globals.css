@@ -1175,14 +1175,14 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
 }
 
 .shout {
+  --h: min(42svh, 320px, 60vw);
+  --w: calc(var(--h) * var(--ratio));
+  --gap: 1.5rem;
   position: fixed;
   z-index: 96;
   bottom: 0;
-  width: min(580px, 96vw);
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  padding-top: 0.5rem;
+  width: var(--w);
+  height: var(--h);
   pointer-events: none;
   animation: shout-pop 5.5s ease-in-out both;
 }
@@ -1193,25 +1193,22 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
 
 .shout-right {
   right: 2vw;
-  flex-direction: row-reverse;
 }
 
 .shout-cutout {
-  flex: 0 0 42%;
-  width: 42%;
-  min-width: 0;
-  height: min(42svh, 320px);
-  object-fit: contain;
-  object-position: bottom;
-  align-self: flex-end;
+  display: block;
+  width: 100%;
+  height: 100%;
   filter: drop-shadow(6px 6px 0 var(--pink));
 }
 
 .shout-bubble {
-  position: relative;
-  flex: 1;
-  min-width: 0;
-  margin: 0.5rem 0 2.5rem;
+  --reach: calc(var(--w) * var(--mx) + var(--gap));
+  position: absolute;
+  bottom: calc(var(--h) * (1 - var(--my)) + var(--gap));
+  width: max-content;
+  max-width: min(300px, calc(96vw - var(--reach)));
+  margin: 0;
   overflow-wrap: anywhere;
   padding: 0.8rem 1rem;
   font-family: var(--font-marker);
@@ -1223,23 +1220,44 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
   box-shadow: 5px 5px 0 var(--ink);
 }
 
+.shout-left .shout-bubble {
+  left: var(--reach);
+}
+
+.shout-right .shout-bubble {
+  --reach: calc(var(--w) * (1 - var(--mx)) + var(--gap));
+  right: var(--reach);
+}
+
+.shout-bubble::before,
 .shout-bubble::after {
   content: "";
   position: absolute;
-  left: -13px;
-  bottom: 20px;
-  width: 20px;
-  height: 20px;
-  background: #fff;
-  border-left: 4px solid var(--ink);
-  border-bottom: 4px solid var(--ink);
-  transform: rotate(45deg);
+  top: 100%;
+  left: 0.6rem;
+  width: calc(var(--gap) + 1.6rem);
+  height: calc(var(--gap) + 0.2rem);
+  translate: calc(-1 * var(--gap) - 0.6rem) 0;
 }
 
+.shout-bubble::before {
+  margin-top: 4px;
+  background: var(--ink);
+  clip-path: polygon(52% 0, 100% 0, 0 100%);
+}
+
+.shout-bubble::after {
+  margin-top: -4px;
+  background: #fff;
+  clip-path: polygon(60% 0, 88% 0, 14% 76%);
+}
+
+.shout-right .shout-bubble::before,
 .shout-right .shout-bubble::after {
   left: auto;
-  right: -13px;
-  transform: rotate(225deg);
+  right: 0.6rem;
+  translate: calc(var(--gap) + 0.6rem) 0;
+  scale: -1 1;
 }
 
 .shout-name {
@@ -1607,14 +1625,14 @@ html.moshing {
 
 @keyframes shout-pop {
   0% {
-    transform: translateY(110%);
+    transform: translateY(100vh);
   }
   10%,
   85% {
     transform: translateY(0);
   }
   100% {
-    transform: translateY(110%);
+    transform: translateY(100vh);
   }
 }
 
