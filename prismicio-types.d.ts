@@ -677,7 +677,7 @@ export interface SettingsDocumentDataShoutsItem {
 	head_x: prismic.NumberField;
 	
 	/**
-	 * Head centre down (% from top) field in *Settings → Shouts (cut-outs that pop up with a speech bubble)*
+	 * Bubble height (% from top, mouth level works best) field in *Settings → Shouts (cut-outs that pop up with a speech bubble)*
 	 *
 	 * - **Field Type**: Number
 	 * - **Placeholder**: 20
