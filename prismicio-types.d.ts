@@ -1406,6 +1406,16 @@ export interface GigListSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	missing_date_text: prismic.KeyTextField;
+	
+	/**
+	 * Photos link text when there are no clips field in *Gig List → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: gig_list.default.primary.evidence_label_no_clips
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	evidence_label_no_clips: prismic.KeyTextField;
 }
 
 /**

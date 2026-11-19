@@ -47,6 +47,12 @@
             "label": "Missing date text"
           },
           "type": "Text"
+        },
+        "evidence_label_no_clips": {
+          "config": {
+            "label": "Photos link text when there are no clips"
+          },
+          "type": "Text"
         }
       },
       "version": ""
