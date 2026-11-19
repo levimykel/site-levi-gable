@@ -667,24 +667,24 @@ export interface SettingsDocumentDataShoutsItem {
 	text: prismic.KeyTextField;
 	
 	/**
-	 * Mouth position across (% from left) field in *Settings → Shouts (cut-outs that pop up with a speech bubble)*
+	 * Head centre across (% from left) field in *Settings → Shouts (cut-outs that pop up with a speech bubble)*
 	 *
 	 * - **Field Type**: Number
 	 * - **Placeholder**: 50
-	 * - **API ID Path**: settings.shouts[].mouth_x
+	 * - **API ID Path**: settings.shouts[].head_x
 	 * - **Documentation**: https://prismic.io/docs/fields/number
 	 */
-	mouth_x: prismic.NumberField;
+	head_x: prismic.NumberField;
 	
 	/**
-	 * Mouth position down (% from top) field in *Settings → Shouts (cut-outs that pop up with a speech bubble)*
+	 * Head centre down (% from top) field in *Settings → Shouts (cut-outs that pop up with a speech bubble)*
 	 *
 	 * - **Field Type**: Number
-	 * - **Placeholder**: 25
-	 * - **API ID Path**: settings.shouts[].mouth_y
+	 * - **Placeholder**: 20
+	 * - **API ID Path**: settings.shouts[].head_y
 	 * - **Documentation**: https://prismic.io/docs/fields/number
 	 */
-	mouth_y: prismic.NumberField;
+	head_y: prismic.NumberField;
 }
 
 /**

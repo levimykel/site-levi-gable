@@ -87,21 +87,21 @@
               },
               "type": "Text"
             },
-            "mouth_x": {
+            "head_x": {
               "config": {
-                "label": "Mouth position across (% from left)",
+                "label": "Head centre across (% from left)",
                 "max": 100,
                 "min": 0,
                 "placeholder": "50"
               },
               "type": "Number"
             },
-            "mouth_y": {
+            "head_y": {
               "config": {
-                "label": "Mouth position down (% from top)",
+                "label": "Head centre down (% from top)",
                 "max": 100,
                 "min": 0,
-                "placeholder": "25"
+                "placeholder": "20"
               },
               "type": "Number"
             }
