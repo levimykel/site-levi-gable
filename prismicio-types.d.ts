@@ -84,15 +84,15 @@ interface BandMemberDocumentData {
 	photo: prismic.ImageField<never>;
 	
 	/**
-	 * Unhinged quote field in *Band Member*
+	 * Short bio field in *Band Member*
 	 *
 	 * - **Field Type**: Rich Text
 	 * - **Placeholder**: *None*
-	 * - **API ID Path**: band_member.quote
+	 * - **API ID Path**: band_member.bio
 	 * - **Tab**: Main
 	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
 	 */
-	quote: prismic.RichTextField;
+	bio: prismic.RichTextField;
 	
 	/**
 	 * Weird fact field in *Band Member*
@@ -955,6 +955,17 @@ interface SettingsDocumentData {
 	mosh_label: prismic.KeyTextField;
 	
 	/**
+	 * Pop-up when the mosh pit starts field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.mosh_message
+	 * - **Tab**: Buttons & pop-ups
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	mosh_message: prismic.KeyTextField;
+	
+	/**
 	 * Drunk mode button field in *Settings*
 	 *
 	 * - **Field Type**: Text
@@ -1090,7 +1101,7 @@ export interface BandMembersSliceDefaultPrimaryMembersItem {
 	 * - **API ID Path**: band_members.default.primary.members[].member
 	 * - **Documentation**: https://prismic.io/docs/fields/content-relationship
 	 */
-	member: ContentRelationshipFieldWithData<[{"fields":["name","instrument","photo","quote","weird_fact","shake_level"],"id":"band_member"}]>;
+	member: ContentRelationshipFieldWithData<[{"fields":["name","instrument","photo","bio","weird_fact","shake_level"],"id":"band_member"}]>;
 }
 
 /**

@@ -210,6 +210,12 @@
         },
         "type": "Text"
       },
+      "mosh_message": {
+        "config": {
+          "label": "Pop-up when the mosh pit starts"
+        },
+        "type": "Text"
+      },
       "drunk_label": {
         "config": {
           "label": "Drunk mode button"

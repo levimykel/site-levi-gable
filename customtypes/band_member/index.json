@@ -27,10 +27,10 @@
         },
         "type": "Image"
       },
-      "quote": {
+      "bio": {
         "config": {
-          "label": "Unhinged quote",
-          "multi": "paragraph,em,strong"
+          "label": "Short bio",
+          "multi": "paragraph,strong,em"
         },
         "type": "StructuredText"
       },
