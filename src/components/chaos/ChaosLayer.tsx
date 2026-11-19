@@ -39,6 +39,7 @@ type Toast = { id: number; message: string };
 
 export type ChaosLabels = {
   mosh: string;
+  moshMessage: string;
   drunk: string;
   sober: string;
   soberOn: string;
@@ -59,6 +60,9 @@ export function ChaosLayer({
   const [sober, setSober] = useState(false);
 
   useEffect(() => registerEggText(eggs), [eggs]);
+  useEffect(() => {
+    moshMessage = labels.moshMessage;
+  }, [labels.moshMessage]);
   useToasts(setToasts);
   useSecretWords();
   useDrunkIdle(setDrunk);
@@ -132,8 +136,7 @@ function useSecretWords() {
       konamiIndex.current = event.key === expected ? konamiIndex.current + 1 : event.key === KONAMI[0] ? 1 : 0;
       if (konamiIndex.current === KONAMI.length) {
         konamiIndex.current = 0;
-        moshPit();
-        findEgg("konami");
+        gravityFails();
         return;
       }
 
@@ -171,11 +174,55 @@ function useSecretWords() {
   }, []);
 }
 
+let moshMessage = "";
+
 export function moshPit() {
   const root = document.documentElement;
   if (root.classList.contains("moshing")) return;
   root.classList.add("moshing");
+  toast(moshMessage);
+  playPowerChord(2.4);
+  playDrumFill(MOSH_BEATS);
+  window.setTimeout(() => playPowerChord(2.4), 2400);
+
+  const elements = Array.from(
+    document.querySelectorAll<HTMLElement>(
+      "main h1, main h2, main h3, main p, main img, main button, main li, header a, footer > *",
+    ),
+  ).slice(0, 220);
+
+  const animations = elements.map((el) => {
+    const rect = el.getBoundingClientRect();
+    const reach = rect.width > 500 ? 0.35 : 1;
+    const keyframes: Keyframe[] = [{ transform: "none" }];
+    for (let i = 0; i < 10; i++) {
+      const x = (Math.random() - 0.5) * 140 * reach;
+      const lift = -(20 + Math.random() * 70) * reach;
+      const r = (Math.random() - 0.5) * 36 * reach;
+      keyframes.push({ transform: `translate(${x}px, ${lift}px) rotate(${r}deg)`, easing: "ease-out" });
+      keyframes.push({ transform: `translate(${x * 1.2}px, 0) rotate(${-r / 2}deg)`, easing: "ease-in" });
+    }
+    keyframes.push({ transform: "none" });
+    return el.animate(keyframes, {
+      duration: 4600 + Math.random() * 600,
+      delay: Math.random() * 250,
+      composite: "add",
+    });
+  });
+
+  Promise.allSettled(animations.map((a) => a.finished)).then(() => root.classList.remove("moshing"));
+}
+
+const MOSH_BEATS = [
+  0, 0.24, 0.48, 0.72, 0.96, 1.2, 1.44, 1.68, 1.92, 2.16, 2.4, 2.64, 2.88, 3.12, 3.36, 3.6, 3.84, 4.08, 4.32,
+];
+
+export function gravityFails() {
+  const root = document.documentElement;
+  if (root.classList.contains("moshing")) return;
+  root.classList.add("moshing");
   playPowerChord();
+  findEgg("konami");
   sayEgg("konami");
 
   const elements = Array.from(

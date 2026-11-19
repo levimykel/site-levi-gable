@@ -20,7 +20,7 @@ export default function BandMembers({ slice }: BandMembersProps) {
       <div className="members">
         {members.map((member, i) => {
           if (!isFilled.contentRelationship(member) || !member.data) return null;
-          const { name, instrument, photo, quote, weird_fact, shake_level } = member.data;
+          const { name, instrument, photo, bio, weird_fact, shake_level } = member.data;
           return (
             <article
               key={member.id}
@@ -53,9 +53,11 @@ export default function BandMembers({ slice }: BandMembersProps) {
                     )}
                   </p>
                 ) : null}
-                <div className="quote">
-                  <PrismicRichText field={quote} />
-                </div>
+                {isFilled.richText(bio) ? (
+                  <div className="bio">
+                    <PrismicRichText field={bio} />
+                  </div>
+                ) : null}
                 {weird_fact ? <p className="weird-fact">⚠️ {weird_fact}</p> : null}
               </div>
             </article>

@@ -93,6 +93,7 @@ async function SettingsHeader() {
         awayTitles={data?.away_titles.map((t) => t.text ?? "").filter(Boolean) ?? []}
         labels={{
           mosh: data?.mosh_label ?? "",
+          moshMessage: data?.mosh_message ?? "",
           drunk: data?.drunk_label ?? "",
           sober: data?.sober_label ?? "",
           soberOn: data?.sober_on_message ?? "",
