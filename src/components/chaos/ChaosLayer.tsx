@@ -165,6 +165,8 @@ function useSecretWords() {
         frescoYBueno();
       } else if (typed.endsWith("falling")) {
         falling();
+      } else if (typed.endsWith("cookie")) {
+        cookieJar();
       } else if (typed.endsWith("yeap")) {
         for (let i = 0; i < 5; i++) window.setTimeout(() => playYeaaap({ pitch: randomPitch() }), i * 160);
       }
@@ -172,6 +174,25 @@ function useSecretWords() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
+}
+
+function cookieJar() {
+  const [message, ...cookies] = eggMessages("cookiejar");
+  for (const line of cookies) {
+    const at = line.indexOf("=");
+    if (at < 1) continue;
+    const name = line
+      .slice(0, at)
+      .trim()
+      .replace(/[^\w-]/g, "_");
+    const value = line
+      .slice(at + 1)
+      .trim()
+      .replace(/;/g, ",");
+    document.cookie = `${name}=${value}; path=/; max-age=31536000; SameSite=Lax`;
+  }
+  findEgg("cookiejar");
+  if (message) toast(message);
 }
 
 let moshMessage = "";
@@ -184,38 +205,86 @@ export function moshPit() {
   playPowerChord(2.4);
   playDrumFill(MOSH_BEATS);
   window.setTimeout(() => playPowerChord(2.4), 2400);
+  window.setTimeout(() => playPowerChord(1.2), 4800);
 
   const elements = Array.from(
     document.querySelectorAll<HTMLElement>(
-      "main h1, main h2, main h3, main p, main img, main button, main li, header a, footer > *",
+      "main h1, main h2, main h3, main p, main img, main button, main li, main a, main figure, main article, header a, header img, footer > *",
     ),
-  ).slice(0, 220);
+  ).slice(0, 400);
+  const centerX = window.innerWidth / 2;
+  const centerY = window.innerHeight / 2;
 
   const animations = elements.map((el) => {
     const rect = el.getBoundingClientRect();
-    const reach = rect.width > 500 ? 0.35 : 1;
+    const reach = rect.width > 500 ? 0.5 : 1;
+    const away = Math.sign(rect.left + rect.width / 2 - centerX) || 1;
     const keyframes: Keyframe[] = [{ transform: "none" }];
-    for (let i = 0; i < 10; i++) {
-      const x = (Math.random() - 0.5) * 140 * reach;
-      const lift = -(20 + Math.random() * 70) * reach;
-      const r = (Math.random() - 0.5) * 36 * reach;
-      keyframes.push({ transform: `translate(${x}px, ${lift}px) rotate(${r}deg)`, easing: "ease-out" });
-      keyframes.push({ transform: `translate(${x * 1.2}px, 0) rotate(${-r / 2}deg)`, easing: "ease-in" });
+    for (let i = 0; i < 16; i++) {
+      const shove = (Math.random() < 0.3 ? -away : away) * (60 + Math.random() * 200) * reach;
+      const lift = -(40 + Math.random() * 180) * reach;
+      const r = (Math.random() - 0.5) * 90 * reach;
+      const spin = Math.random() < 0.08 ? 360 * away : 0;
+      const squash = 0.8 + Math.random() * 0.5;
+      keyframes.push({
+        transform: `translate(${shove}px, ${lift}px) rotate(${r + spin}deg) scale(${squash})`,
+        easing: "cubic-bezier(.2,.9,.3,1.4)",
+      });
+      keyframes.push({
+        transform: `translate(${-shove * 0.6}px, ${Math.random() * 30}px) rotate(${-r}deg) scale(${2 - squash}, ${squash})`,
+        easing: "ease-in",
+      });
     }
     keyframes.push({ transform: "none" });
     return el.animate(keyframes, {
-      duration: 4600 + Math.random() * 600,
-      delay: Math.random() * 250,
+      duration: 5200 + Math.random() * 800,
+      delay: Math.random() * 150,
       composite: "add",
     });
   });
 
-  Promise.allSettled(animations.map((a) => a.finished)).then(() => root.classList.remove("moshing"));
+  const main = document.querySelector("main");
+  if (main) {
+    const shake: Keyframe[] = [];
+    for (let i = 0; i < 60; i++) {
+      shake.push({ transform: `translate(${(Math.random() - 0.5) * 24}px, ${(Math.random() - 0.5) * 18}px)` });
+    }
+    shake.push({ transform: "none" });
+    animations.push(main.animate(shake, { duration: 5600, composite: "add" }));
+  }
+
+  const surfers = elements.filter((el) => el instanceof HTMLImageElement && el.getBoundingClientRect().bottom > 0);
+  const surfer = surfers[Math.floor(Math.random() * surfers.length)];
+  if (surfer) {
+    const rect = surfer.getBoundingClientRect();
+    const dx = centerX - rect.left - rect.width / 2;
+    const dy = centerY - rect.top - rect.height / 2;
+    animations.push(
+      surfer.animate(
+        [
+          { transform: "none" },
+          { transform: `translate(${dx - 400}px, ${dy - 250}px) rotate(-200deg) scale(1.4)`, offset: 0.3 },
+          { transform: `translate(${dx + 400}px, ${dy - 300}px) rotate(160deg) scale(1.6)`, offset: 0.6 },
+          { transform: `translate(${dx}px, ${dy - 100}px) rotate(720deg) scale(1.2)`, offset: 0.85 },
+          { transform: "none" },
+        ],
+        { duration: 5400, easing: "ease-in-out", composite: "add" },
+      ),
+    );
+    surfer.style.zIndex = "99";
+    if (getComputedStyle(surfer).position === "static") surfer.style.position = "relative";
+  }
+
+  Promise.allSettled(animations.map((a) => a.finished)).then(() => {
+    root.classList.remove("moshing");
+    if (surfer) {
+      surfer.style.zIndex = "";
+      surfer.style.position = "";
+    }
+  });
 }
 
-const MOSH_BEATS = [
-  0, 0.24, 0.48, 0.72, 0.96, 1.2, 1.44, 1.68, 1.92, 2.16, 2.4, 2.64, 2.88, 3.12, 3.36, 3.6, 3.84, 4.08, 4.32,
-];
+const MOSH_BEATS = Array.from({ length: 44 }, (_, i) => i * 0.12);
 
 export function gravityFails() {
   const root = document.documentElement;

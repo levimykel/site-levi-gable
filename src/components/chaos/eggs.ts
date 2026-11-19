@@ -15,6 +15,7 @@ export const EGG_IDS = [
   "logo",
   "pick",
   "cookies",
+  "cookiejar",
   "lost",
   "bottom",
 ] as const;
