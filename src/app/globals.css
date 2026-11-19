@@ -421,7 +421,7 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
   display: block;
   width: 100%;
   aspect-ratio: 3 / 4;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .beer-label-missing {
@@ -489,7 +489,7 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
 .gig-poster {
   width: 120px;
   height: 160px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .gig-poster-missing {
@@ -725,7 +725,7 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
 .slop-item img {
   width: 100%;
   aspect-ratio: 1;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .slop-item figcaption {
@@ -774,7 +774,8 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
 }
 
 .show-poster {
-  max-width: 480px;
+  width: 100%;
+  max-width: min(480px, 100%);
   height: auto;
   border: 6px solid var(--ink);
   rotate: -3deg;
@@ -1137,48 +1138,50 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
   cursor: var(--pick);
 }
 
-.cool-and-good > span {
-  display: none;
+.language-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.8rem;
+  margin-left: auto;
 }
 
-html:not([data-cool]) .cool-and-good [data-cool="es"],
-html[data-cool="es"] .cool-and-good [data-cool="es"],
-html[data-cool="fr"] .cool-and-good [data-cool="fr"],
-html[data-cool="en"] .cool-and-good [data-cool="en"] {
-  display: inline;
+.header-sign-off {
+  font-family: var(--font-marker);
+  font-size: 0.9rem;
+  color: var(--lime);
 }
 
 .language-switcher {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  margin-left: auto;
-  font-size: 0.9rem;
-}
-
-.language-switcher button {
-  padding: 0.1rem 0.45rem;
+  min-height: 44px;
+  padding: 0.4rem 0.6rem;
   font-family: var(--font-comic);
+  font-size: 0.9rem;
   font-weight: 700;
   color: var(--ink);
   background: var(--paper);
-  border: 2px solid var(--ink);
+  border: 2px solid var(--yellow);
+  border-radius: 0.3rem;
+  cursor: pointer;
+  color-scheme: light;
 }
 
-.language-switcher button[aria-pressed="true"] {
-  background: var(--lime);
-  rotate: -6deg;
+.language-switcher:focus-visible {
+  outline: 3px solid var(--cyan);
+  outline-offset: 3px;
 }
 
 .shout {
   position: fixed;
   z-index: 96;
   bottom: 0;
+  width: min(580px, 96vw);
   display: flex;
   align-items: flex-start;
-  gap: 0.5rem;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
   pointer-events: none;
-  animation: shout-pop 5.5s cubic-bezier(.3, 1.4, .5, 1) forwards;
+  animation: shout-pop 5.5s ease-in-out both;
 }
 
 .shout-left {
@@ -1191,23 +1194,49 @@ html[data-cool="en"] .cool-and-good [data-cool="en"] {
 }
 
 .shout-cutout {
-  width: auto;
-  height: min(42vh, 360px);
+  flex: 0 0 42%;
+  width: 42%;
+  min-width: 0;
+  height: min(42svh, 320px);
+  object-fit: contain;
+  object-position: bottom;
+  align-self: flex-end;
   filter: drop-shadow(6px 6px 0 var(--pink));
 }
 
 .shout-bubble {
   position: relative;
-  max-width: min(320px, 55vw);
-  margin-top: 1rem;
+  flex: 1;
+  min-width: 0;
+  margin: 0.5rem 0 2.5rem;
+  overflow-wrap: anywhere;
   padding: 0.8rem 1rem;
   font-family: var(--font-marker);
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 3vw, 1.2rem);
   color: var(--ink);
   background: #fff;
   border: 4px solid var(--ink);
   border-radius: 1.5rem;
   box-shadow: 5px 5px 0 var(--ink);
+}
+
+.shout-bubble::after {
+  content: "";
+  position: absolute;
+  left: -13px;
+  bottom: 20px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-left: 4px solid var(--ink);
+  border-bottom: 4px solid var(--ink);
+  transform: rotate(45deg);
+}
+
+.shout-right .shout-bubble::after {
+  left: auto;
+  right: -13px;
+  transform: rotate(225deg);
 }
 
 .shout-name {
@@ -1373,7 +1402,8 @@ html.sober *::after {
   transition: none !important;
 }
 
-html.sober main > section {
+html.sober main > section,
+html.sober .tilt-zone {
   transform: none;
 }
 
@@ -1574,14 +1604,14 @@ html.moshing {
 
 @keyframes shout-pop {
   0% {
-    translate: 0 110%;
+    transform: translateY(110%);
   }
   10%,
   85% {
-    translate: 0 0;
+    transform: translateY(0);
   }
   100% {
-    translate: 0 110%;
+    transform: translateY(110%);
   }
 }
 
@@ -1632,4 +1662,31 @@ html.moshing {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
+}
+
+/* Keep the shout readable when animations are disabled or shortened. */
+html.sober .shout {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shout {
+    animation: none !important;
+    transform: none;
+  }
+}
+
+.photo-gallery .photo-pile {
+  margin-top: 2rem;
+}
+
+.photo-gallery .polaroid img {
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: var(--paper);
+}
+
+.photo-gallery .polaroid figcaption {
+  margin-top: 0.65rem;
+  font-family: var(--font-marker);
 }

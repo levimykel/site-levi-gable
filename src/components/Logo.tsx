@@ -1,32 +1,35 @@
 "use client";
 
-import Image from "next/image";
+import type { ImageField } from "@prismicio/client";
+import { PrismicNextImage } from "@prismicio/next";
 import Link from "next/link";
 import { useRef } from "react";
-import { findEgg, toast } from "./chaos/eggs";
+import { eggMessages, findEgg, toast } from "./chaos/eggs";
 import { playYeaaap, randomPitch } from "./chaos/sounds";
 import { toeRack } from "./chaos/ChaosLayer";
 
-const COMPLAINTS = ["ow", "OW", "please stop", "I'm calling my manager", "fine. FINE."];
-
-export function Logo({ title }: { title: string }) {
+export function Logo({ title, image }: { title: string; image: ImageField | undefined }) {
   const pokes = useRef(0);
 
   return (
     <Link
       href="/"
       className="logo"
+      aria-label={title}
       onClick={() => {
         pokes.current += 1;
         playYeaaap({ pitch: randomPitch() });
-        if (pokes.current >= 3) toast(COMPLAINTS[Math.min(pokes.current - 3, COMPLAINTS.length - 1)]);
+        const complaints = eggMessages("logo");
+        if (pokes.current >= 3 && complaints.length > 0) {
+          toast(complaints[Math.min(pokes.current - 3, complaints.length - 1)]);
+        }
         if (pokes.current === 5) {
           findEgg("logo");
           toeRack();
         }
       }}
     >
-      <Image src="/mrs-logo.jpg" alt={title} width={150} height={150} preload />
+      <PrismicNextImage field={image} preload fallback={<span>{title}</span>} />
     </Link>
   );
 }

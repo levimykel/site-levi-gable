@@ -1,15 +1,18 @@
 "use client";
 
+import { splitHidden } from "@/lib/hidden";
 import { toggleSlop } from "./ChaosLayer";
 
-export function AiDisclaimer() {
+export function AiDisclaimer({ text }: { text: string }) {
+  const parts = splitHidden(text);
+  if (!parts) return <p className="ai-disclaimer">{text}</p>;
   return (
     <p className="ai-disclaimer">
-      No AIs were harmed in the making of this website (several were{" "}
+      {parts.before}
       <button type="button" className="slop-link" onClick={toggleSlop}>
-        bullied
+        {parts.hidden}
       </button>
-      ).
+      {parts.after}
     </p>
   );
 }

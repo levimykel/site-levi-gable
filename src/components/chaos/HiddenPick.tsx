@@ -2,16 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { findEgg, toast } from "./eggs";
+import { eggMessages, findEgg, toast } from "./eggs";
 import { playPowerChord } from "./sounds";
 
 type Spot = { top: number; left: number; rotate: number; size: number };
-
-const PICK_LINES = [
-  "🎸 Nick's pick! He's been looking for that since 2023.",
-  "🎸 A pick. Slightly chewed. Definitely Nick's.",
-  "🎸 Found it under the sofa of the internet.",
-];
 
 export function HiddenPick() {
   const pathname = usePathname();
@@ -47,9 +41,14 @@ export function HiddenPick() {
       onClick={() => {
         setFound(true);
         playPowerChord(1.2);
-        toast(PICK_LINES[Math.floor(Math.random() * PICK_LINES.length)]);
+        const messages = eggMessages("pick");
+        const lines = messages.filter((line) => !line.includes("{count}"));
+        const tally = messages.find((line) => line.includes("{count}"));
+        if (lines.length > 0) toast(lines[Math.floor(Math.random() * lines.length)]);
         const returned = returnPick();
-        if (returned > 1) toast(`🎸 Picks returned to Nick: ${returned}. He has already lost ${returned + 1} more.`);
+        if (returned > 1 && tally) {
+          toast(tally.replaceAll("{count}", String(returned)).replaceAll("{more}", String(returned + 1)));
+        }
         findEgg("pick");
       }}
     />

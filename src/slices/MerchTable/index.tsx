@@ -33,15 +33,27 @@ export default function MerchTable({ slice }: MerchTableProps) {
               </div>
               <h3>{item.name || "Mystery item"}</h3>
               {item.description ? <p>{item.description}</p> : null}
-              {item.sizes ? <p className="merch-sizes">Sizes: {item.sizes}</p> : null}
-              <CartButton disabled={soldOut} />
+              {item.sizes ? (
+                <p className="merch-sizes">
+                  {slice.primary.sizes_label} {item.sizes}
+                </p>
+              ) : null}
+              <CartButton
+                disabled={soldOut}
+                labels={{
+                  add: slice.primary.add_to_cart_label ?? "",
+                  inCart: slice.primary.in_cart_label ?? "",
+                  soldOut: slice.primary.sold_out_label ?? "",
+                }}
+                messages={slice.primary.cart_messages.map((m) => m.text ?? "").filter(Boolean)}
+              />
             </li>
           );
         })}
       </ul>
       {isFilled.link(slice.primary.buy_link) ? (
         <PrismicNextLink field={slice.primary.buy_link} className="chaos-button merch-buy">
-          How to actually buy stuff
+          {slice.primary.buy_link_label || slice.primary.buy_link.text}
         </PrismicNextLink>
       ) : null}
     </section>

@@ -12,6 +12,15 @@ export async function getSettings(ref?: string) {
   return settings;
 }
 
+export async function getEasterEggs(ref?: string) {
+  "use cache";
+  cacheLife("max");
+  const client = createClient();
+  const eggs = await client.getSingle("easter_eggs", { ref }).catch(() => null);
+  if (eggs) cacheTagPrismicPages([eggs]);
+  return eggs;
+}
+
 export async function getHomepage(ref?: string) {
   "use cache";
   cacheLife("max");

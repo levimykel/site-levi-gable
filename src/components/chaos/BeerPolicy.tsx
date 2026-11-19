@@ -1,12 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { findEgg, toast } from "./eggs";
+import { findEgg, sayEgg, toast } from "./eggs";
 import { playBurp } from "./sounds";
 
 const STORAGE_KEY = "mrs:beer-policy";
 
-export function BeerPolicy() {
+export type BeerPolicyText = {
+  text: string;
+  textAgain: string;
+  accept: string;
+  alsoAccept: string;
+  decline: string;
+  declineMessage: string;
+};
+
+export function BeerPolicy({ text }: { text: BeerPolicyText }) {
   const [open, setOpen] = useState(false);
   const [round, setRound] = useState(0);
 
@@ -18,7 +27,7 @@ export function BeerPolicy() {
     return () => window.clearTimeout(timer);
   }, []);
 
-  if (!open) return null;
+  if (!open || !text.text) return null;
 
   const close = () => {
     setOpen(false);
@@ -29,14 +38,10 @@ export function BeerPolicy() {
 
   return (
     <div className="beer-policy" role="dialog" aria-label="Beer policy">
-      <p>
-        {round === 0
-          ? "🍺 This website uses beer to improve your experience. By continuing you agree to have one more."
-          : "🍺 Are you sure? This is the last one. (It is not the last one.)"}
-      </p>
+      <p>{round === 0 ? text.text : text.textAgain || text.text}</p>
       <div className="beer-policy-buttons">
         <button type="button" onClick={close}>
-          Accept
+          {text.accept}
         </button>
         <button
           type="button"
@@ -47,11 +52,11 @@ export function BeerPolicy() {
               return;
             }
             findEgg("cookies");
-            toast("🍻 Policy accepted twice. Respect.");
+            sayEgg("cookies");
             close();
           }}
         >
-          Also accept
+          {text.alsoAccept}
         </button>
         <button
           type="button"
@@ -60,9 +65,9 @@ export function BeerPolicy() {
             const button = event.currentTarget;
             button.style.transform = `translate(${(Math.random() - 0.5) * 300}px, ${(Math.random() - 0.5) * 120}px)`;
           }}
-          onClick={() => toast("❌ Declining is not supported in this country.")}
+          onClick={() => toast(text.declineMessage)}
         >
-          Decline
+          {text.decline}
         </button>
       </div>
     </div>

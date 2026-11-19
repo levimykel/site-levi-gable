@@ -22,7 +22,7 @@ export function Header({ settings }: { settings: SettingsDocument | null }) {
   return (
     <header className="site-header">
       <div className="header-row">
-        <Logo title={title} />
+        <Logo title={title} image={settings?.data.logo} />
         {settings?.data.tagline ? (
           <p className="tagline">
             <EggTrigger egg="desert">{settings.data.tagline}</EggTrigger>
@@ -37,7 +37,23 @@ export function Header({ settings }: { settings: SettingsDocument | null }) {
             ))}
           </ul>
         </nav>
-        <LanguageSwitcher />
+        <LanguageSwitcher
+          signOff={settings?.data.sign_off ?? ""}
+          languages={
+            settings?.data.languages?.flatMap(({ code, label, name, phrase }) =>
+              code && phrase
+                ? [
+                    {
+                      code,
+                      phrase,
+                      label: label || code.toUpperCase(),
+                      name: name || code,
+                    },
+                  ]
+                : [],
+            ) ?? []
+          }
+        />
       </div>
       <div className="marquee" aria-hidden="true">
         <div className="marquee-track">

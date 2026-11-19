@@ -2,37 +2,45 @@ import { isFilled } from "@prismicio/client";
 import { PrismicNextLink } from "@prismicio/next";
 import { PrismicRichText } from "@prismicio/react";
 import type { SettingsDocument } from "../../prismicio-types";
+import { splitHidden } from "@/lib/hidden";
 import { EggCounter } from "./chaos/EggCounter";
 import { AiDisclaimer } from "./chaos/FooterJokes";
 import { EggTrigger } from "./chaos/EggTrigger";
-import { CoolAndGood } from "./CoolAndGood";
+import { withCool } from "./CoolAndGood";
 import { VisitorCounter } from "./chaos/VisitorCounter";
 
 export function Footer({ settings }: { settings: SettingsDocument | null }) {
+  const data = settings?.data;
+  const madeIn = data?.made_in ? splitHidden(data.made_in) : null;
+
   return (
     <footer className="site-footer">
-      <div className="under-construction">🚧 UNDER CONSTRUCTION SINCE 2019 🚧</div>
-      {settings && isFilled.richText(settings.data.footer_text) ? (
-        <PrismicRichText field={settings.data.footer_text} />
-      ) : (
-        <p>© MRS. All rights reversed.</p>
-      )}
-      <AiDisclaimer />
-      <p className="sign-off">
-        Stay <CoolAndGood />.
-      </p>
-      <p className="made-in">
-        Proudly made in the <EggTrigger egg="desert">desert rock region</EggTrigger>.
-      </p>
-      {settings && isFilled.link(settings.data.instagram) ? (
-        <PrismicNextLink field={settings.data.instagram} className="insta">
-          📸 follow us on the gram
+      {data?.under_construction ? <div className="under-construction">{data.under_construction}</div> : null}
+      {data && isFilled.richText(data.footer_text) ? <PrismicRichText field={data.footer_text} /> : null}
+      {data?.ai_disclaimer ? <AiDisclaimer text={data.ai_disclaimer} /> : null}
+      {data?.sign_off ? <p className="sign-off">{withCool(data.sign_off)}</p> : null}
+      {data?.made_in ? (
+        <p className="made-in">
+          {madeIn ? (
+            <>
+              {madeIn.before}
+              <EggTrigger egg="desert">{madeIn.hidden}</EggTrigger>
+              {madeIn.after}
+            </>
+          ) : (
+            data.made_in
+          )}
+        </p>
+      ) : null}
+      {data && isFilled.link(data.instagram) ? (
+        <PrismicNextLink field={data.instagram} className="insta">
+          {data.instagram_label || data.instagram.text}
         </PrismicNextLink>
       ) : null}
-      <VisitorCounter />
-      <EggCounter />
-      <p className="netscape">Best viewed in Netscape Navigator 4.0 at 640×480 with the volume at 11.</p>
-      <p className="hint">psst… try typing the drummer&rsquo;s name. Or don&rsquo;t. We&rsquo;re a website, not a cop.</p>
+      <VisitorCounter label={data?.visitor_label ?? ""} />
+      <EggCounter label={data?.egg_counter_label ?? ""} />
+      {data?.netscape ? <p className="netscape">{data.netscape}</p> : null}
+      {data?.hint ? <p className="hint">{data.hint}</p> : null}
     </footer>
   );
 }

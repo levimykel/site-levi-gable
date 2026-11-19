@@ -41,25 +41,26 @@ export default async function GigList({ slice }: GigListProps) {
                 ) : isFilled.image(gig.data.photos[0]?.image) ? (
                   <PrismicNextImage field={gig.data.photos[0].image} className="gig-poster shaky-img" fallbackAlt="" />
                 ) : (
-                  <div className="gig-poster gig-poster-missing">poster coming soon-ish</div>
+                  <div className="gig-poster gig-poster-missing">{slice.primary.missing_poster_text}</div>
                 )}
                 <div>
-                  <p className="gig-date">{date ? dateFormat.format(date) : "Date: when we feel like it"}</p>
+                  <p className="gig-date">{date ? dateFormat.format(date) : slice.primary.missing_date_text}</p>
                   <h3>
                     <PrismicNextLink document={gig}>{gig.data.venue}</PrismicNextLink>
                     {gig.data.city ? <span className="gig-city"> — {gig.data.city}</span> : null}
                   </h3>
                   {gig.data.notes ? <p>{gig.data.notes}</p> : null}
                   <p className="gig-status">{gig.data.status}</p>
-                  {gig.data.photos.length > 0 || gig.data.clips.length > 0 ? (
+                  {slice.primary.evidence_label && (gig.data.photos.length > 0 || gig.data.clips.length > 0) ? (
                     <PrismicNextLink document={gig} className="gig-evidence">
-                      see the evidence ({gig.data.photos.length} photos
-                      {gig.data.clips.length > 0 ? `, ${gig.data.clips.length} clips` : ""}) →
+                      {slice.primary.evidence_label
+                        .replaceAll("{photos}", String(gig.data.photos.length))
+                        .replaceAll("{clips}", String(gig.data.clips.length))}
                     </PrismicNextLink>
                   ) : null}
                   {isFilled.link(gig.data.tickets) ? (
                     <PrismicNextLink field={gig.data.tickets} className="chaos-button">
-                      Tickets / info
+                      {slice.primary.tickets_label || gig.data.tickets.text}
                     </PrismicNextLink>
                   ) : null}
                 </div>

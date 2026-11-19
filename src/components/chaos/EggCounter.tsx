@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { EGG_COUNT, EGG_EVENT, readFoundEggs } from "./eggs";
 
-export function EggCounter() {
+export function EggCounter({ label }: { label: string }) {
   const [count, setCount] = useState<number | null>(null);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export function EggCounter() {
 
   return (
     <span className="egg-counter" title="There are more. Keep poking.">
-      🥚 Easter eggs found: {count ?? "?"}/{EGG_COUNT}
+      {label} {count ?? "?"}/{EGG_COUNT}
     </span>
   );
 }

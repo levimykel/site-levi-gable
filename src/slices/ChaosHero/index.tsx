@@ -39,8 +39,8 @@ export default function ChaosHero({ slice }: ChaosHeroProps) {
       </h1>
       {slice.primary.subtitle ? <p className="chaos-hero-subtitle">{slice.primary.subtitle}</p> : null}
       <PrismicNextImage field={slice.primary.image} className="shaky-img chaos-hero-img" fallbackAlt="" />
-      <div className="sticker sticker-a">PARENTAL ADVISORY: LOUD</div>
-      <div className="sticker sticker-b">TURN IT UP</div>
+      {slice.primary.sticker_top ? <div className="sticker sticker-a">{slice.primary.sticker_top}</div> : null}
+      {slice.primary.sticker_bottom ? <div className="sticker sticker-b">{slice.primary.sticker_bottom}</div> : null}
     </section>
   );
 }

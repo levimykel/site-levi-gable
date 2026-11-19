@@ -1,27 +1,44 @@
-export const EGGS = {
-  konami: "Mosh pit unlocked",
-  mrs: "You summoned the feedback demon",
-  beer: "It's raining beer",
-  martin: "Martin dropped the bass",
-  vincent: "Vincent counted you in",
-  slop: "Slop mode: maximum AI",
-  desert: "Visited the desert rock region",
-  fresco: "Fresco y bueno",
-  falling: "Fell for Falling",
-  toerack: "Toe Rack (it's Return of the Rat)",
-  yeaaap: "Certified Yeaaaper (50 yeaaaps)",
-  drunk: "Stayed too long at the bar",
-  away: "You left. We noticed.",
-  logo: "Stop poking the logo",
-  pick: "Found Nick's lost pick",
-  cookies: "Accepted the beer policy twice",
-  lost: "Got lost in the desert rock region (404)",
-  bottom: "Reached the bottom of the barrel",
-} as const;
+export const EGG_IDS = [
+  "konami",
+  "mrs",
+  "beer",
+  "martin",
+  "vincent",
+  "slop",
+  "desert",
+  "fresco",
+  "falling",
+  "toerack",
+  "yeaaap",
+  "drunk",
+  "away",
+  "logo",
+  "pick",
+  "cookies",
+  "lost",
+  "bottom",
+] as const;
 
-export type EggId = keyof typeof EGGS;
+export type EggId = (typeof EGG_IDS)[number];
 
-export const EGG_COUNT = Object.keys(EGGS).length;
+export const EGG_COUNT = EGG_IDS.length;
+
+export type EggText = { egg: EggId; name: string; messages: string[] };
+
+let eggText = new Map<EggId, EggText>();
+
+export function registerEggText(eggs: EggText[]) {
+  eggText = new Map(eggs.map((egg) => [egg.egg, egg]));
+}
+
+export function eggMessages(id: EggId) {
+  return eggText.get(id)?.messages ?? [];
+}
+
+export function sayEgg(id: EggId, index = 0) {
+  const message = eggMessages(id)[index];
+  if (message) toast(message);
+}
 
 const STORAGE_KEY = "mrs:eggs";
 export const EGG_EVENT = "mrs:egg";
@@ -45,9 +62,10 @@ export function findEgg(id: EggId) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify([...found]));
   } catch {}
   window.dispatchEvent(new CustomEvent(EGG_EVENT, { detail: { id, isNew, total: found.size } }));
-  if (isNew) toast(`🥚 ${EGGS[id]} (${found.size}/${EGG_COUNT})`);
+  if (isNew) toast(`🥚 ${eggText.get(id)?.name || id} (${found.size}/${EGG_COUNT})`);
 }
 
 export function toast(message: string) {
+  if (!message) return;
   window.dispatchEvent(new CustomEvent(TOAST_EVENT, { detail: message }));
 }

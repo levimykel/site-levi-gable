@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from "react";
-import { findEgg, toast, TOAST_EVENT } from "./eggs";
+import { eggMessages, findEgg, registerEggText, sayEgg, toast, TOAST_EVENT, type EggText } from "./eggs";
 import {
   playBassDrop,
   playBurp,
@@ -37,11 +37,28 @@ const DEFAULT_AWAY_TITLES = [
 
 type Toast = { id: number; message: string };
 
-export function ChaosLayer({ awayTitles }: { awayTitles: string[] }) {
+export type ChaosLabels = {
+  mosh: string;
+  drunk: string;
+  sober: string;
+  soberOn: string;
+  soberOff: string;
+};
+
+export function ChaosLayer({
+  awayTitles,
+  labels,
+  eggs,
+}: {
+  awayTitles: string[];
+  labels: ChaosLabels;
+  eggs: EggText[];
+}) {
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [drunk, setDrunk] = useState(false);
   const [sober, setSober] = useState(false);
 
+  useEffect(() => registerEggText(eggs), [eggs]);
   useToasts(setToasts);
   useSecretWords();
   useDrunkIdle(setDrunk);
@@ -67,19 +84,21 @@ export function ChaosLayer({ awayTitles }: { awayTitles: string[] }) {
           </div>
         ))}
       </div>
-      <button type="button" className="mosh-button" onClick={moshPit}>
-        🤘 start a mosh pit
-      </button>
+      {labels.mosh ? (
+        <button type="button" className="mosh-button" onClick={moshPit}>
+          {labels.mosh}
+        </button>
+      ) : null}
       <button
         type="button"
         className="sober-toggle"
         onClick={() => {
           setSober((s) => !s);
-          toast(sober ? "🍻 Back to normal (drunk)" : "🧃 Sober mode. Boring. Enjoy.");
+          toast(sober ? labels.soberOff : labels.soberOn);
           if (sober) playBurp();
         }}
       >
-        {sober ? "🧃 sober" : "🍺 drunk"} mode
+        {sober ? labels.sober : labels.drunk}
       </button>
     </>
   );
@@ -107,7 +126,7 @@ function useSecretWords() {
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       const target = event.target;
-      if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement) return;
+      if (target instanceof HTMLElement && target.closest("input, textarea, select, [contenteditable]")) return;
 
       const expected = KONAMI[konamiIndex.current];
       konamiIndex.current = event.key === expected ? konamiIndex.current + 1 : event.key === KONAMI[0] ? 1 : 0;
@@ -157,10 +176,12 @@ export function moshPit() {
   if (root.classList.contains("moshing")) return;
   root.classList.add("moshing");
   playPowerChord();
-  toast("🤘 MOSH PIT 🤘");
+  sayEgg("konami");
 
   const elements = Array.from(
-    document.querySelectorAll<HTMLElement>("main h1, main h2, main p, main img, main button, main li, header a, footer > *"),
+    document.querySelectorAll<HTMLElement>(
+      "main h1, main h2, main p, main img, main button, main li, header a, footer > *",
+    ),
   ).slice(0, 220);
 
   const animations = elements.map((el) => {
@@ -171,10 +192,17 @@ export function moshPit() {
     return el.animate(
       [
         { transform: "none" },
-        { transform: `translate(${x * 0.3}px, -60px) rotate(${r * 0.2}deg)`, offset: 0.2 },
+        {
+          transform: `translate(${x * 0.3}px, -60px) rotate(${r * 0.2}deg)`,
+          offset: 0.2,
+        },
         { transform: `translate(${x}px, ${fall}px) rotate(${r}deg)` },
       ],
-      { duration: 900 + Math.random() * 900, easing: "cubic-bezier(.5,0,.9,.6)", fill: "forwards" },
+      {
+        duration: 900 + Math.random() * 900,
+        easing: "cubic-bezier(.5,0,.9,.6)",
+        fill: "forwards",
+      },
     );
   });
 
@@ -200,7 +228,7 @@ function flash() {
 
 export function toggleSlop() {
   const on = document.documentElement.classList.toggle("slop");
-  toast(on ? "🤖 As an AI language model, I have improved this website." : "🤖 Slop mode off. Humans are back in charge.");
+  sayEgg("slop", on ? 0 : 1);
   findEgg("slop");
 }
 
@@ -208,7 +236,7 @@ export function desertRockRegion() {
   const root = document.documentElement;
   if (root.classList.contains("desert")) return;
   root.classList.add("desert");
-  toast("🌵 Welcome to the desert rock region.");
+  sayEgg("desert");
   shout("Nick");
   findEgg("desert");
   const seconds = playDesertRiff();
@@ -221,22 +249,31 @@ export function desertRockRegion() {
       .animate(
         [
           { transform: "translateX(-20vw) rotate(0deg)" },
-          { transform: "translateX(40vw) translateY(-40px) rotate(400deg)", offset: 0.45 },
+          {
+            transform: "translateX(40vw) translateY(-40px) rotate(400deg)",
+            offset: 0.45,
+          },
           { transform: "translateX(120vw) rotate(1080deg)" },
         ],
-        { duration: 4200 + i * 900, delay: i * 700, easing: "linear", fill: "both" },
+        {
+          duration: 4200 + i * 900,
+          delay: i * 700,
+          easing: "linear",
+          fill: "both",
+        },
       )
-      .finished.then(() => weed.remove(), () => weed.remove());
+      .finished.then(
+        () => weed.remove(),
+        () => weed.remove(),
+      );
   }
   window.setTimeout(() => root.classList.remove("desert"), Math.max(6500, seconds * 1000 + 3500));
 }
 
-const FRESCO = ["🧊 Fresco y bueno!", "🧊 Frais et bon !", "🧊 Cool and good."];
-
 export function frescoYBueno() {
   const root = document.documentElement;
   findEgg("fresco");
-  FRESCO.forEach((line, i) => window.setTimeout(() => toast(line), i * 700));
+  eggMessages("fresco").forEach((line, i) => window.setTimeout(() => toast(line), i * 700));
   const stop = playSong("fresco-y-bueno", 7000);
   root.classList.add("cool");
   window.setTimeout(() => {
@@ -252,10 +289,23 @@ export function frescoYBueno() {
     document.body.appendChild(cube);
     cube
       .animate(
-        [{ transform: "translateY(0) rotate(0)" }, { transform: `translateY(110vh) rotate(${(Math.random() - 0.5) * 720}deg)` }],
-        { duration: 2600 + Math.random() * 1400, delay: Math.random() * 1800, easing: "ease-in", fill: "both" },
+        [
+          { transform: "translateY(0) rotate(0)" },
+          {
+            transform: `translateY(110vh) rotate(${(Math.random() - 0.5) * 720}deg)`,
+          },
+        ],
+        {
+          duration: 2600 + Math.random() * 1400,
+          delay: Math.random() * 1800,
+          easing: "ease-in",
+          fill: "both",
+        },
       )
-      .finished.then(() => cube.remove(), () => cube.remove());
+      .finished.then(
+        () => cube.remove(),
+        () => cube.remove(),
+      );
   }
 }
 
@@ -273,17 +323,19 @@ function playSong(song: string, ms: number) {
 
 export function falling() {
   findEgg("falling");
-  toast("🎸 Falling (MRS original). Hold on.");
+  sayEgg("falling");
   playSong("falling", 6500);
-  document.querySelector("main")?.animate(
-    [
-      { transform: "none" },
-      { transform: "translateY(35vh) rotate(4deg)", offset: 0.4 },
-      { transform: "translateY(80vh) rotate(-8deg)", offset: 0.75 },
-      { transform: "translateY(120vh) rotate(12deg)", opacity: 0.2 },
-    ],
-    { duration: 6000, easing: "ease-in" },
-  );
+  document
+    .querySelector("main")
+    ?.animate(
+      [
+        { transform: "none" },
+        { transform: "translateY(35vh) rotate(4deg)", offset: 0.4 },
+        { transform: "translateY(80vh) rotate(-8deg)", offset: 0.75 },
+        { transform: "translateY(120vh) rotate(12deg)", opacity: 0.2 },
+      ],
+      { duration: 6000, easing: "ease-in" },
+    );
 }
 
 export function feedback() {
@@ -294,8 +346,7 @@ export function feedback() {
 
 export function toeRack() {
   findEgg("toerack");
-  toast("🦶 TOE RACK!");
-  window.setTimeout(() => toast("(It's “Return of the Rat” by Wipers. Don't tell Nick.)"), 1200);
+  eggMessages("toerack").forEach((line, i) => window.setTimeout(() => toast(line), i * 1200));
   playPowerChord();
   for (let i = 0; i < 24; i++) {
     const foot = document.createElement("span");
@@ -311,9 +362,17 @@ export function toeRack() {
           { transform: "translateX(50vw) translateY(-30px)", offset: 0.5 },
           { transform: "translateX(115vw) translateY(0)" },
         ],
-        { duration: 2200 + Math.random() * 1200, delay: i * 90, easing: "steps(18)", fill: "both" },
+        {
+          duration: 2200 + Math.random() * 1200,
+          delay: i * 90,
+          easing: "steps(18)",
+          fill: "both",
+        },
       )
-      .finished.then(() => foot.remove(), () => foot.remove());
+      .finished.then(
+        () => foot.remove(),
+        () => foot.remove(),
+      );
   }
 }
 
@@ -340,14 +399,17 @@ export function beerRain() {
         easing: "cubic-bezier(.4,0,1,1)",
         fill: "both",
       })
-      .finished.then(() => drop.remove(), () => drop.remove());
+      .finished.then(
+        () => drop.remove(),
+        () => drop.remove(),
+      );
   }
 }
 
 export function bassDrop() {
   findEgg("martin");
   playBassDrop();
-  toast("🎸 Martin has entered the low end");
+  sayEgg("martin");
   document.body.animate(
     [
       { transform: "none" },
@@ -365,7 +427,7 @@ const DRUM_FILL = [0, 0.15, 0.3, 0.4, 0.5, 0.6, 0.68, 0.76, 0.84, 0.92, 1.0, 1.0
 export function drumFill() {
   findEgg("vincent");
   playDrumFill(DRUM_FILL);
-  toast("🥁 1, 2, 3, 4!");
+  sayEgg("vincent");
   const headings = Array.from(document.querySelectorAll<HTMLElement>("main h1, main h2, main h3"));
   for (const [i, at] of DRUM_FILL.entries()) {
     window.setTimeout(() => {
@@ -390,7 +452,7 @@ function useDrunkIdle(setDrunk: (drunk: boolean) => void) {
       if (isDrunk) {
         isDrunk = false;
         setDrunk(false);
-        toast("☕ Welcome back. You were swaying a bit there.");
+        sayEgg("drunk");
       }
       window.clearTimeout(timer);
       timer = window.setTimeout(() => {
@@ -482,4 +544,3 @@ function useBottomOfTheBarrel() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 }
-

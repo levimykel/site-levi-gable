@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export function VisitorCounter() {
+export function VisitorCounter({ label }: { label: string }) {
   const [count, setCount] = useState(6669);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export function VisitorCounter() {
 
   return (
     <span className="visitor-counter" aria-label="Visitor counter, totally accurate">
-      You are visitor #
+      {label}
       {String(Math.max(0, count))
         .padStart(7, "0")
         .split("")
