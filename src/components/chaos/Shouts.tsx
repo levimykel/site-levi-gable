@@ -6,7 +6,7 @@ import { PrismicNextImage } from "@prismicio/next";
 import { SHOUT_EVENT } from "./ChaosLayer";
 import { withCool } from "../CoolAndGood";
 
-export type Shout = { name: string; text: string; image: ImageField; mouthX: number; mouthY: number };
+export type Shout = { name: string; text: string; image: ImageField; headX: number; headY: number };
 
 type Showing = Shout & { id: number; side: "left" | "right" };
 
@@ -58,7 +58,7 @@ export function Shouts({ shouts }: { shouts: Shout[] }) {
       key={showing.id}
       className={`shout shout-${showing.side}`}
       role="status"
-      style={{ "--ratio": width / height, "--mx": showing.mouthX / 100, "--my": showing.mouthY / 100 }}
+      style={{ "--ratio": width / height, "--hx": showing.headX / 100, "--hy": showing.headY / 100 }}
     >
       <PrismicNextImage field={showing.image} className="shout-cutout" fallbackAlt="" />
       <p className="shout-bubble">

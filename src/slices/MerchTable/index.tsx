@@ -1,6 +1,7 @@
 import { isFilled, type Content } from "@prismicio/client";
 import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
 import { PrismicRichText, type SliceComponentProps } from "@prismicio/react";
+import { HiddenCookie } from "@/components/chaos/HiddenCookie";
 import { wobble } from "@/lib/wobble";
 import { CartButton } from "./CartButton";
 
@@ -56,6 +57,7 @@ export default function MerchTable({ slice }: MerchTableProps) {
           {slice.primary.buy_link_label || slice.primary.buy_link.text}
         </PrismicNextLink>
       ) : null}
+      <HiddenCookie />
     </section>
   );
 }

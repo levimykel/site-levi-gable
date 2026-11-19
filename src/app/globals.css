@@ -973,6 +973,35 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
   margin-top: 2.5rem;
 }
 
+.crowd-surfer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 98;
+  object-fit: cover;
+  pointer-events: none;
+  border: 4px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--pink);
+}
+
+.hidden-cookie {
+  display: block;
+  margin: 0.4rem 0 0 min(16rem, 55vw);
+  padding: 0;
+  font-size: 1rem;
+  line-height: 1;
+  background: none;
+  border: 0;
+  opacity: 0.55;
+  rotate: -25deg;
+  cursor: pointer;
+}
+
+.hidden-cookie:hover {
+  animation: earthquake 0.1s infinite;
+  opacity: 1;
+}
+
 /* ---------- Music ---------- */
 
 .tracks {
@@ -1177,7 +1206,8 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
 .shout {
   --h: min(42svh, 320px, 60vw);
   --w: calc(var(--h) * var(--ratio));
-  --gap: 1.5rem;
+  --head: calc(var(--h) * 0.11);
+  --tail: 1.4rem;
   position: fixed;
   z-index: 96;
   bottom: 0;
@@ -1203,9 +1233,10 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
 }
 
 .shout-bubble {
-  --reach: calc(var(--w) * var(--mx) + var(--gap));
+  --reach: calc(var(--w) * var(--hx) + var(--head) + var(--tail));
   position: absolute;
-  bottom: calc(var(--h) * (1 - var(--my)) + var(--gap));
+  top: calc(var(--h) * var(--hy));
+  translate: 0 -50%;
   width: max-content;
   max-width: min(300px, calc(96vw - var(--reach)));
   margin: 0;
@@ -1225,7 +1256,7 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
 }
 
 .shout-right .shout-bubble {
-  --reach: calc(var(--w) * (1 - var(--mx)) + var(--gap));
+  --reach: calc(var(--w) * (1 - var(--hx)) + var(--head) + var(--tail));
   right: var(--reach);
 }
 
@@ -1233,31 +1264,40 @@ main > section:nth-of-type(3n + 2) .slice-heading h2 {
 .shout-bubble::after {
   content: "";
   position: absolute;
-  top: 100%;
-  left: 0.6rem;
-  width: calc(var(--gap) + 1.6rem);
-  height: calc(var(--gap) + 0.2rem);
-  translate: calc(-1 * var(--gap) - 0.6rem) 0;
+  top: 50%;
+  clip-path: polygon(0 50%, 100% 0, 100% 100%);
 }
 
 .shout-bubble::before {
-  margin-top: 4px;
+  left: -4px;
+  width: var(--tail);
+  height: 1.8rem;
+  translate: -100% -50%;
   background: var(--ink);
-  clip-path: polygon(52% 0, 100% 0, 0 100%);
 }
 
 .shout-bubble::after {
-  margin-top: -4px;
+  left: 0;
+  width: calc(var(--tail) - 4px);
+  height: 1rem;
+  translate: calc(4px - 100%) -50%;
   background: #fff;
-  clip-path: polygon(60% 0, 88% 0, 14% 76%);
 }
 
 .shout-right .shout-bubble::before,
 .shout-right .shout-bubble::after {
   left: auto;
-  right: 0.6rem;
-  translate: calc(var(--gap) + 0.6rem) 0;
   scale: -1 1;
+}
+
+.shout-right .shout-bubble::before {
+  right: -4px;
+  translate: 100% -50%;
+}
+
+.shout-right .shout-bubble::after {
+  right: 0;
+  translate: calc(100% - 4px) -50%;
 }
 
 .shout-name {

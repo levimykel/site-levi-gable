@@ -176,7 +176,7 @@ function useSecretWords() {
   }, []);
 }
 
-function cookieJar() {
+export function cookieJar() {
   const [message, ...cookies] = eggMessages("cookiejar");
   for (const line of cookies) {
     const at = line.indexOf("=");
@@ -213,7 +213,6 @@ export function moshPit() {
     ),
   ).slice(0, 400);
   const centerX = window.innerWidth / 2;
-  const centerY = window.innerHeight / 2;
 
   const animations = elements.map((el) => {
     const rect = el.getBoundingClientRect();
@@ -253,35 +252,47 @@ export function moshPit() {
     animations.push(main.animate(shake, { duration: 5600, composite: "add" }));
   }
 
-  const surfers = elements.filter((el) => el instanceof HTMLImageElement && el.getBoundingClientRect().bottom > 0);
-  const surfer = surfers[Math.floor(Math.random() * surfers.length)];
-  if (surfer) {
-    const rect = surfer.getBoundingClientRect();
-    const dx = centerX - rect.left - rect.width / 2;
-    const dy = centerY - rect.top - rect.height / 2;
-    animations.push(
-      surfer.animate(
-        [
-          { transform: "none" },
-          { transform: `translate(${dx - 400}px, ${dy - 250}px) rotate(-200deg) scale(1.4)`, offset: 0.3 },
-          { transform: `translate(${dx + 400}px, ${dy - 300}px) rotate(160deg) scale(1.6)`, offset: 0.6 },
-          { transform: `translate(${dx}px, ${dy - 100}px) rotate(720deg) scale(1.2)`, offset: 0.85 },
-          { transform: "none" },
-        ],
-        { duration: 5400, easing: "ease-in-out", composite: "add" },
-      ),
-    );
-    surfer.style.zIndex = "99";
-    if (getComputedStyle(surfer).position === "static") surfer.style.position = "relative";
-  }
+  const surfer = crowdSurf();
+  if (surfer) animations.push(surfer);
 
-  Promise.allSettled(animations.map((a) => a.finished)).then(() => {
-    root.classList.remove("moshing");
-    if (surfer) {
-      surfer.style.zIndex = "";
-      surfer.style.position = "";
-    }
+  Promise.allSettled(animations.map((a) => a.finished)).then(() => root.classList.remove("moshing"));
+}
+
+function crowdSurf() {
+  const photos = Array.from(document.querySelectorAll<HTMLImageElement>("main img")).filter(
+    (img) => img.complete && img.naturalWidth > 0,
+  );
+  const inView = photos.filter((img) => {
+    const rect = img.getBoundingClientRect();
+    return rect.bottom > 0 && rect.top < window.innerHeight && rect.width > 40;
   });
+  const pool = inView.length > 0 ? inView : photos;
+  const photo = pool[Math.floor(Math.random() * pool.length)];
+  if (!photo) return null;
+
+  const size = Math.min(260, window.innerWidth * 0.4);
+  const surfer = document.createElement("img");
+  surfer.src = photo.currentSrc || photo.src;
+  surfer.alt = "";
+  surfer.className = "crowd-surfer";
+  surfer.style.width = `${size}px`;
+  surfer.style.aspectRatio = `${photo.naturalWidth} / ${photo.naturalHeight}`;
+  document.body.append(surfer);
+
+  const from = -size - 40;
+  const to = window.innerWidth + 40;
+  const crowd = window.innerHeight * 0.55;
+  const keyframes: Keyframe[] = [];
+  for (let i = 0; i <= 10; i++) {
+    const x = from + ((to - from) * i) / 10;
+    const y = crowd - (i % 2 === 0 ? 0 : 60 + Math.random() * 80);
+    const spin = i === 5 ? 540 : (Math.random() - 0.5) * 70;
+    keyframes.push({ transform: `translate(${x}px, ${y}px) rotate(${spin}deg)` });
+  }
+  const ride = surfer.animate(keyframes, { duration: 5000, delay: 300, easing: "ease-in-out", fill: "backwards" });
+  const land = () => surfer.remove();
+  ride.finished.then(land, land);
+  return ride;
 }
 
 const MOSH_BEATS = Array.from({ length: 44 }, (_, i) => i * 0.12);

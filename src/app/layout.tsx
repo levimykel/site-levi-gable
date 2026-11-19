@@ -117,7 +117,7 @@ async function SettingsHeader() {
         shouts={
           settings?.data.shouts.flatMap((s) =>
             s.text && isFilled.image(s.image)
-              ? [{ name: s.name ?? "", text: s.text, image: s.image, mouthX: s.mouth_x ?? 50, mouthY: s.mouth_y ?? 25 }]
+              ? [{ name: s.name ?? "", text: s.text, image: s.image, headX: s.head_x ?? 50, headY: s.head_y ?? 20 }]
               : [],
           ) ?? []
         }
