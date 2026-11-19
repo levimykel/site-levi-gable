@@ -234,7 +234,7 @@ export interface EasterEggsDocumentDataEggsItem {
 	 * - **API ID Path**: easter_eggs.eggs[].egg
 	 * - **Documentation**: https://prismic.io/docs/fields/select
 	 */
-	egg: prismic.SelectField<"konami" | "mrs" | "beer" | "martin" | "vincent" | "slop" | "desert" | "fresco" | "falling" | "toerack" | "yeaaap" | "drunk" | "away" | "logo" | "pick" | "cookies" | "lost" | "bottom">;
+	egg: prismic.SelectField<"konami" | "mrs" | "beer" | "martin" | "vincent" | "slop" | "desert" | "fresco" | "falling" | "toerack" | "yeaaap" | "drunk" | "away" | "logo" | "pick" | "cookies" | "cookiejar" | "lost" | "bottom">;
 	
 	/**
 	 * Name (shown when found) field in *Easter eggs → Easter eggs*
