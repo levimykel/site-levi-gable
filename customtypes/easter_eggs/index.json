@@ -1,0 +1,58 @@
+{
+  "format": "custom",
+  "id": "easter_eggs",
+  "json": {
+    "Main": {
+      "eggs": {
+        "config": {
+          "fields": {
+            "egg": {
+              "config": {
+                "label": "Egg",
+                "options": [
+                  "konami",
+                  "mrs",
+                  "beer",
+                  "martin",
+                  "vincent",
+                  "slop",
+                  "desert",
+                  "fresco",
+                  "falling",
+                  "toerack",
+                  "yeaaap",
+                  "drunk",
+                  "away",
+                  "logo",
+                  "pick",
+                  "cookies",
+                  "lost",
+                  "bottom"
+                ]
+              },
+              "type": "Select"
+            },
+            "name": {
+              "config": {
+                "label": "Name (shown when found)"
+              },
+              "type": "Text"
+            },
+            "messages": {
+              "config": {
+                "label": "Pop-ups (one per paragraph)",
+                "multi": "paragraph"
+              },
+              "type": "StructuredText"
+            }
+          },
+          "label": "Easter eggs"
+        },
+        "type": "Group"
+      }
+    }
+  },
+  "label": "Easter eggs",
+  "repeatable": false,
+  "status": true
+}

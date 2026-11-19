@@ -40,6 +40,18 @@
             ]
           },
           "type": "Select"
+        },
+        "sticker_top": {
+          "config": {
+            "label": "Top sticker"
+          },
+          "type": "Text"
+        },
+        "sticker_bottom": {
+          "config": {
+            "label": "Bottom sticker"
+          },
+          "type": "Text"
         }
       },
       "version": ""

@@ -91,6 +91,184 @@
           "label": "Shouts (cut-outs that pop up with a speech bubble)"
         },
         "type": "Group"
+      },
+      "logo": {
+        "config": {
+          "label": "Logo"
+        },
+        "type": "Image"
+      },
+      "meta_description": {
+        "config": {
+          "label": "Default page description"
+        },
+        "type": "Text"
+      },
+      "languages": {
+        "config": {
+          "fields": {
+            "code": {
+              "config": {
+                "label": "Code"
+              },
+              "type": "Text"
+            },
+            "label": {
+              "config": {
+                "label": "Switcher label"
+              },
+              "type": "Text"
+            },
+            "name": {
+              "config": {
+                "label": "Name (in the toast)"
+              },
+              "type": "Text"
+            },
+            "phrase": {
+              "config": {
+                "label": "Cool and good phrase"
+              },
+              "type": "Text"
+            }
+          },
+          "label": "Languages"
+        },
+        "type": "Group"
+      },
+      "meta_title": {
+        "config": {
+          "label": "Default page title",
+          "placeholder": "MRS — rock, grunge and punk from Paris"
+        },
+        "type": "Text"
+      },
+      "sign_off": {
+        "config": {
+          "label": "Sign-off",
+          "placeholder": "Stay {cool}. ({cool} is the phrase in the chosen language)"
+        },
+        "type": "Text"
+      }
+    },
+    "Footer": {
+      "under_construction": {
+        "config": {
+          "label": "Under construction banner"
+        },
+        "type": "Text"
+      },
+      "ai_disclaimer": {
+        "config": {
+          "label": "AI joke",
+          "placeholder": "Put [square brackets] around the hidden slop-mode link"
+        },
+        "type": "Text"
+      },
+      "made_in": {
+        "config": {
+          "label": "Made in",
+          "placeholder": "Put [square brackets] around the hidden desert link"
+        },
+        "type": "Text"
+      },
+      "instagram_label": {
+        "config": {
+          "label": "Instagram link text"
+        },
+        "type": "Text"
+      },
+      "visitor_label": {
+        "config": {
+          "label": "Visitor counter label"
+        },
+        "type": "Text"
+      },
+      "egg_counter_label": {
+        "config": {
+          "label": "Easter egg counter label"
+        },
+        "type": "Text"
+      },
+      "netscape": {
+        "config": {
+          "label": "Netscape line"
+        },
+        "type": "Text"
+      },
+      "hint": {
+        "config": {
+          "label": "Hint"
+        },
+        "type": "Text"
+      }
+    },
+    "Buttons & pop-ups": {
+      "mosh_label": {
+        "config": {
+          "label": "Mosh pit button"
+        },
+        "type": "Text"
+      },
+      "drunk_label": {
+        "config": {
+          "label": "Drunk mode button"
+        },
+        "type": "Text"
+      },
+      "sober_label": {
+        "config": {
+          "label": "Sober mode button"
+        },
+        "type": "Text"
+      },
+      "sober_on_message": {
+        "config": {
+          "label": "Pop-up when switching to sober"
+        },
+        "type": "Text"
+      },
+      "sober_off_message": {
+        "config": {
+          "label": "Pop-up when switching back to drunk"
+        },
+        "type": "Text"
+      },
+      "cookie_text": {
+        "config": {
+          "label": "Beer policy text"
+        },
+        "type": "Text"
+      },
+      "cookie_text_again": {
+        "config": {
+          "label": "Beer policy text, second time"
+        },
+        "type": "Text"
+      },
+      "cookie_accept": {
+        "config": {
+          "label": "Accept button"
+        },
+        "type": "Text"
+      },
+      "cookie_also_accept": {
+        "config": {
+          "label": "Also accept button"
+        },
+        "type": "Text"
+      },
+      "cookie_decline": {
+        "config": {
+          "label": "Decline button"
+        },
+        "type": "Text"
+      },
+      "cookie_decline_message": {
+        "config": {
+          "label": "Pop-up when clicking decline"
+        },
+        "type": "Text"
       }
     }
   },

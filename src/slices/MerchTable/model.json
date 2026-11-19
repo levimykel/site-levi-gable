@@ -83,6 +83,50 @@
             "select": "web"
           },
           "type": "Link"
+        },
+        "add_to_cart_label": {
+          "config": {
+            "label": "Add to cart button"
+          },
+          "type": "Text"
+        },
+        "in_cart_label": {
+          "config": {
+            "label": "In cart button ({count} is the number of clicks)"
+          },
+          "type": "Text"
+        },
+        "sold_out_label": {
+          "config": {
+            "label": "Sold-out button"
+          },
+          "type": "Text"
+        },
+        "sizes_label": {
+          "config": {
+            "label": "Sizes label"
+          },
+          "type": "Text"
+        },
+        "buy_link_label": {
+          "config": {
+            "label": "Buy link text"
+          },
+          "type": "Text"
+        },
+        "cart_messages": {
+          "config": {
+            "fields": {
+              "text": {
+                "config": {
+                  "label": "Pop-up"
+                },
+                "type": "Text"
+              }
+            },
+            "label": "Cart pop-ups"
+          },
+          "type": "Group"
         }
       },
       "version": ""

@@ -223,6 +223,68 @@ interface BeerDocumentData {
 export type BeerDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<BeerDocumentData>, "beer", Lang>;
 
 /**
+ * Item in *Easter eggs → Easter eggs*
+ */
+export interface EasterEggsDocumentDataEggsItem {
+	/**
+	 * Egg field in *Easter eggs → Easter eggs*
+	 *
+	 * - **Field Type**: Select
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: easter_eggs.eggs[].egg
+	 * - **Documentation**: https://prismic.io/docs/fields/select
+	 */
+	egg: prismic.SelectField<"konami" | "mrs" | "beer" | "martin" | "vincent" | "slop" | "desert" | "fresco" | "falling" | "toerack" | "yeaaap" | "drunk" | "away" | "logo" | "pick" | "cookies" | "lost" | "bottom">;
+	
+	/**
+	 * Name (shown when found) field in *Easter eggs → Easter eggs*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: easter_eggs.eggs[].name
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	name: prismic.KeyTextField;
+	
+	/**
+	 * Pop-ups (one per paragraph) field in *Easter eggs → Easter eggs*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: easter_eggs.eggs[].messages
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	messages: prismic.RichTextField;
+}
+
+/**
+ * Content for Easter eggs documents
+ */
+interface EasterEggsDocumentData {
+	/**
+	 * Easter eggs field in *Easter eggs*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: easter_eggs.eggs[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	eggs: prismic.GroupField<Simplify<EasterEggsDocumentDataEggsItem>>;
+}
+
+/**
+ * Easter eggs document from Prismic
+ *
+ * - **API ID**: `easter_eggs`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type EasterEggsDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<EasterEggsDocumentData>, "easter_eggs", Lang>;
+
+/**
  * Item in *Gig → Photos*
  */
 export interface GigDocumentDataPhotosItem {
@@ -606,6 +668,51 @@ export interface SettingsDocumentDataShoutsItem {
 }
 
 /**
+ * Item in *Settings → Languages*
+ */
+export interface SettingsDocumentDataLanguagesItem {
+	/**
+	 * Code field in *Settings → Languages*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.languages[].code
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	code: prismic.KeyTextField;
+	
+	/**
+	 * Switcher label field in *Settings → Languages*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.languages[].label
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	label: prismic.KeyTextField;
+	
+	/**
+	 * Name (in the toast) field in *Settings → Languages*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.languages[].name
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	name: prismic.KeyTextField;
+	
+	/**
+	 * Cool and good phrase field in *Settings → Languages*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.languages[].phrase
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	phrase: prismic.KeyTextField;
+}
+
+/**
  * Content for Settings documents
  */
 interface SettingsDocumentData {
@@ -696,6 +803,266 @@ interface SettingsDocumentData {
 	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
 	 */
 	shouts: prismic.GroupField<Simplify<SettingsDocumentDataShoutsItem>>;
+	
+	/**
+	 * Logo field in *Settings*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.logo
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	logo: prismic.ImageField<never>;
+	
+	/**
+	 * Default page description field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.meta_description
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_description: prismic.KeyTextField;
+	
+	/**
+	 * Languages field in *Settings*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.languages[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	languages: prismic.GroupField<Simplify<SettingsDocumentDataLanguagesItem>>;
+	
+	/**
+	 * Default page title field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: MRS — rock, grunge and punk from Paris
+	 * - **API ID Path**: settings.meta_title
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_title: prismic.KeyTextField;
+	
+	/**
+	 * Sign-off field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Stay {cool}. ({cool} is the phrase in the chosen language)
+	 * - **API ID Path**: settings.sign_off
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	sign_off: prismic.KeyTextField;/**
+	 * Under construction banner field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.under_construction
+	 * - **Tab**: Footer
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	under_construction: prismic.KeyTextField;
+	
+	/**
+	 * AI joke field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Put [square brackets] around the hidden slop-mode link
+	 * - **API ID Path**: settings.ai_disclaimer
+	 * - **Tab**: Footer
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	ai_disclaimer: prismic.KeyTextField;
+	
+	/**
+	 * Made in field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Put [square brackets] around the hidden desert link
+	 * - **API ID Path**: settings.made_in
+	 * - **Tab**: Footer
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	made_in: prismic.KeyTextField;
+	
+	/**
+	 * Instagram link text field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.instagram_label
+	 * - **Tab**: Footer
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	instagram_label: prismic.KeyTextField;
+	
+	/**
+	 * Visitor counter label field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.visitor_label
+	 * - **Tab**: Footer
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	visitor_label: prismic.KeyTextField;
+	
+	/**
+	 * Easter egg counter label field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.egg_counter_label
+	 * - **Tab**: Footer
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	egg_counter_label: prismic.KeyTextField;
+	
+	/**
+	 * Netscape line field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.netscape
+	 * - **Tab**: Footer
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	netscape: prismic.KeyTextField;
+	
+	/**
+	 * Hint field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.hint
+	 * - **Tab**: Footer
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	hint: prismic.KeyTextField;/**
+	 * Mosh pit button field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.mosh_label
+	 * - **Tab**: Buttons & pop-ups
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	mosh_label: prismic.KeyTextField;
+	
+	/**
+	 * Drunk mode button field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.drunk_label
+	 * - **Tab**: Buttons & pop-ups
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	drunk_label: prismic.KeyTextField;
+	
+	/**
+	 * Sober mode button field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.sober_label
+	 * - **Tab**: Buttons & pop-ups
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	sober_label: prismic.KeyTextField;
+	
+	/**
+	 * Pop-up when switching to sober field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.sober_on_message
+	 * - **Tab**: Buttons & pop-ups
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	sober_on_message: prismic.KeyTextField;
+	
+	/**
+	 * Pop-up when switching back to drunk field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.sober_off_message
+	 * - **Tab**: Buttons & pop-ups
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	sober_off_message: prismic.KeyTextField;
+	
+	/**
+	 * Beer policy text field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.cookie_text
+	 * - **Tab**: Buttons & pop-ups
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	cookie_text: prismic.KeyTextField;
+	
+	/**
+	 * Beer policy text, second time field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.cookie_text_again
+	 * - **Tab**: Buttons & pop-ups
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	cookie_text_again: prismic.KeyTextField;
+	
+	/**
+	 * Accept button field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.cookie_accept
+	 * - **Tab**: Buttons & pop-ups
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	cookie_accept: prismic.KeyTextField;
+	
+	/**
+	 * Also accept button field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.cookie_also_accept
+	 * - **Tab**: Buttons & pop-ups
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	cookie_also_accept: prismic.KeyTextField;
+	
+	/**
+	 * Decline button field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.cookie_decline
+	 * - **Tab**: Buttons & pop-ups
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	cookie_decline: prismic.KeyTextField;
+	
+	/**
+	 * Pop-up when clicking decline field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.cookie_decline_message
+	 * - **Tab**: Buttons & pop-ups
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	cookie_decline_message: prismic.KeyTextField;
 }
 
 /**
@@ -709,7 +1076,7 @@ interface SettingsDocumentData {
  */
 export type SettingsDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<SettingsDocumentData>, "settings", Lang>;
 
-export type AllDocumentTypes = BandMemberDocument | BeerDocument | GigDocument | HomepageDocument | PageDocument | SettingsDocument;
+export type AllDocumentTypes = BandMemberDocument | BeerDocument | EasterEggsDocument | GigDocument | HomepageDocument | PageDocument | SettingsDocument;
 
 /**
  * Item in *Band Members → Default → Primary → Members*
@@ -822,6 +1189,46 @@ export interface BeerCellarSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
 	 */
 	beers: prismic.GroupField<Simplify<BeerCellarSliceDefaultPrimaryBeersItem>>;
+	
+	/**
+	 * Side effects label field in *Beer Cellar → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: beer_cellar.default.primary.side_effects_label
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	side_effects_label: prismic.KeyTextField;
+	
+	/**
+	 * Pour button field in *Beer Cellar → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: beer_cellar.default.primary.pour_label
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	pour_label: prismic.KeyTextField;
+	
+	/**
+	 * Pour pop-up ({beer} is the beer name) field in *Beer Cellar → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: beer_cellar.default.primary.pour_message
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	pour_message: prismic.KeyTextField;
+	
+	/**
+	 * Missing label text field in *Beer Cellar → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: beer_cellar.default.primary.missing_label_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	missing_label_text: prismic.KeyTextField;
 }
 
 /**
@@ -891,6 +1298,26 @@ export interface ChaosHeroSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/fields/select
 	 */
 	chaos_level: prismic.SelectField<"1" | "5" | "11", "filled">;
+	
+	/**
+	 * Top sticker field in *Chaos Hero → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: chaos_hero.default.primary.sticker_top
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	sticker_top: prismic.KeyTextField;
+	
+	/**
+	 * Bottom sticker field in *Chaos Hero → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: chaos_hero.default.primary.sticker_bottom
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	sticker_bottom: prismic.KeyTextField;
 }
 
 /**
@@ -939,6 +1366,46 @@ export interface GigListSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
 	 */
 	empty_message: prismic.RichTextField;
+	
+	/**
+	 * Tickets button field in *Gig List → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: gig_list.default.primary.tickets_label
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	tickets_label: prismic.KeyTextField;
+	
+	/**
+	 * Photos link text field in *Gig List → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: gig_list.default.primary.evidence_label
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	evidence_label: prismic.KeyTextField;
+	
+	/**
+	 * Missing poster text field in *Gig List → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: gig_list.default.primary.missing_poster_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	missing_poster_text: prismic.KeyTextField;
+	
+	/**
+	 * Missing date text field in *Gig List → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: gig_list.default.primary.missing_date_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	missing_date_text: prismic.KeyTextField;
 }
 
 /**
@@ -1080,6 +1547,21 @@ export interface MerchTableSliceDefaultPrimaryItemsItem {
 }
 
 /**
+ * Item in *Merch Table → Default → Primary → Cart pop-ups*
+ */
+export interface MerchTableSliceDefaultPrimaryCartMessagesItem {
+	/**
+	 * Pop-up field in *Merch Table → Default → Primary → Cart pop-ups*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: merch_table.default.primary.cart_messages[].text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	text: prismic.KeyTextField;
+}
+
+/**
  * Primary content in *Merch Table → Default → Primary*
  */
 export interface MerchTableSliceDefaultPrimary {
@@ -1122,6 +1604,66 @@ export interface MerchTableSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/fields/link
 	 */
 	buy_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+	
+	/**
+	 * Add to cart button field in *Merch Table → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: merch_table.default.primary.add_to_cart_label
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	add_to_cart_label: prismic.KeyTextField;
+	
+	/**
+	 * In cart button ({count} is the number of clicks) field in *Merch Table → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: merch_table.default.primary.in_cart_label
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	in_cart_label: prismic.KeyTextField;
+	
+	/**
+	 * Sold-out button field in *Merch Table → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: merch_table.default.primary.sold_out_label
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	sold_out_label: prismic.KeyTextField;
+	
+	/**
+	 * Sizes label field in *Merch Table → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: merch_table.default.primary.sizes_label
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	sizes_label: prismic.KeyTextField;
+	
+	/**
+	 * Buy link text field in *Merch Table → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: merch_table.default.primary.buy_link_label
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	buy_link_label: prismic.KeyTextField;
+	
+	/**
+	 * Cart pop-ups field in *Merch Table → Default → Primary*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: merch_table.default.primary.cart_messages[]
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	cart_messages: prismic.GroupField<Simplify<MerchTableSliceDefaultPrimaryCartMessagesItem>>;
 }
 
 /**
@@ -1619,6 +2161,9 @@ declare module "@prismicio/client" {
 			BandMemberDocumentData,
 			BeerDocument,
 			BeerDocumentData,
+			EasterEggsDocument,
+			EasterEggsDocumentData,
+			EasterEggsDocumentDataEggsItem,
 			GigDocument,
 			GigDocumentData,
 			GigDocumentDataPhotosItem,
@@ -1634,6 +2179,7 @@ declare module "@prismicio/client" {
 			SettingsDocumentDataMarqueeItem,
 			SettingsDocumentDataAwayTitlesItem,
 			SettingsDocumentDataShoutsItem,
+			SettingsDocumentDataLanguagesItem,
 			AllDocumentTypes,
 			BandMembersSlice,
 			BandMembersSliceDefaultPrimaryMembersItem,
@@ -1659,6 +2205,7 @@ declare module "@prismicio/client" {
 			ManifestoSliceDefault,
 			MerchTableSlice,
 			MerchTableSliceDefaultPrimaryItemsItem,
+			MerchTableSliceDefaultPrimaryCartMessagesItem,
 			MerchTableSliceDefaultPrimary,
 			MerchTableSliceVariation,
 			MerchTableSliceDefault,

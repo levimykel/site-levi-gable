@@ -52,6 +52,30 @@
             "label": "Beers"
           },
           "type": "Group"
+        },
+        "side_effects_label": {
+          "config": {
+            "label": "Side effects label"
+          },
+          "type": "Text"
+        },
+        "pour_label": {
+          "config": {
+            "label": "Pour button"
+          },
+          "type": "Text"
+        },
+        "pour_message": {
+          "config": {
+            "label": "Pour pop-up ({beer} is the beer name)"
+          },
+          "type": "Text"
+        },
+        "missing_label_text": {
+          "config": {
+            "label": "Missing label text"
+          },
+          "type": "Text"
         }
       },
       "version": ""

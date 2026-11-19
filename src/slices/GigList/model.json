@@ -23,6 +23,30 @@
             "multi": "paragraph,em"
           },
           "type": "StructuredText"
+        },
+        "tickets_label": {
+          "config": {
+            "label": "Tickets button"
+          },
+          "type": "Text"
+        },
+        "evidence_label": {
+          "config": {
+            "label": "Photos link text"
+          },
+          "type": "Text"
+        },
+        "missing_poster_text": {
+          "config": {
+            "label": "Missing poster text"
+          },
+          "type": "Text"
+        },
+        "missing_date_text": {
+          "config": {
+            "label": "Missing date text"
+          },
+          "type": "Text"
         }
       },
       "version": ""
