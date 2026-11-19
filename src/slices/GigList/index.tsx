@@ -34,6 +34,10 @@ export default async function GigList({ slice }: GigListProps) {
         <ol className="gigs">
           {gigs.map((gig) => {
             const date = asDate(gig.data.date);
+            const evidence =
+              gig.data.clips.length === 0 && slice.primary.evidence_label_no_clips
+                ? slice.primary.evidence_label_no_clips
+                : slice.primary.evidence_label;
             return (
               <li key={gig.id} className={`gig gig-${(gig.data.status ?? "upcoming").split(" ")[0]}`}>
                 {isFilled.image(gig.data.poster) ? (
@@ -51,9 +55,9 @@ export default async function GigList({ slice }: GigListProps) {
                   </h3>
                   {gig.data.notes ? <p>{gig.data.notes}</p> : null}
                   <p className="gig-status">{gig.data.status}</p>
-                  {slice.primary.evidence_label && (gig.data.photos.length > 0 || gig.data.clips.length > 0) ? (
+                  {evidence && (gig.data.photos.length > 0 || gig.data.clips.length > 0) ? (
                     <PrismicNextLink document={gig} className="gig-evidence">
-                      {slice.primary.evidence_label
+                      {evidence
                         .replaceAll("{photos}", String(gig.data.photos.length))
                         .replaceAll("{clips}", String(gig.data.clips.length))}
                     </PrismicNextLink>
